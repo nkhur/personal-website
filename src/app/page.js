@@ -28,7 +28,7 @@ export default function Home() {
         open={open}
         onClose={handleClose}
       >
-        <DialogTitle>Smile! You're on Camera</DialogTitle>
+        <DialogTitle className="dialogTitle">Smile! You're on Camera.</DialogTitle>
         <DialogContent>
           <DialogContentText>
             This website uses gestures for visualization control - move, twist, and stretch your hand to change the background. Toggle this 
@@ -46,6 +46,7 @@ export default function Home() {
         <div style={{paddingTop:'7%'}}>
           <h3>Hi, I'm</h3>
           <h1>Navya Khurana</h1>
+          <h4>i mess with data, ai, & other tech a bunch (...and explore a lil design on the side.)</h4>
         </div>
         <Navbar refs={refs} />
       </div>
