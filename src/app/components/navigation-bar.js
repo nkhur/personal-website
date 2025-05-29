@@ -7,7 +7,8 @@ export default function Navbar({ refs }) {
       flexDirection: "column",
       alignItems: "flex-start",
       gap: "1rem",
-      paddingTop: "9%"
+      paddingTop: "9%",
+      // paddingBottom:"5%"
     }}>
       <button onClick={() => refs.about.current.scrollIntoView({ behavior: "smooth" })}>\ about</button>
       <button onClick={() => refs.work_experience.current.scrollIntoView({ behavior: "smooth" })}>\ work-experience</button>

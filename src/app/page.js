@@ -4,7 +4,6 @@ import './globals.css';
 import React from 'react';
 import { useRef } from "react";
 import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@mui/material';
-import LandingPage from './pages/index.js'
 import WorkExperiencePage from './pages/work-experience';
 import AboutPage from './pages/about';
 import ProjectPage from './pages/projects';
@@ -42,13 +41,18 @@ export default function Home() {
           </Button>
         </DialogActions>
       </Dialog>
-      
-      <div>
-        <div className="min-h-screen snap-start p-8"><LandingPage /></div>
+
+      <div style={{ height: '100vh'}}>
+        <div style={{paddingTop:'7%'}}>
+          <h3>Hi, I'm</h3>
+          <h1>Navya Khurana</h1>
+        </div>
         <Navbar refs={refs} />
-        <div className="min-h-screen snap-start p-8" ref={refs.about}><AboutPage /></div>
-        <div className="min-h-screen snap-start p-8" ref={refs.work_experience}><WorkExperiencePage /></div>
-        <div className="min-h-screen snap-start p-8" ref={refs.projects}><ProjectPage /></div>
+      </div>
+      <div>
+        <div ref={refs.about} style={{ height: '100vh'}}><AboutPage /></div>
+        <div ref={refs.work_experience} style={{ height: '100vh'}}><WorkExperiencePage /></div>
+        <div ref={refs.projects} style={{ height: '100vh'}}><ProjectPage /></div>
         <HandTracker />
       </div>
     </>
