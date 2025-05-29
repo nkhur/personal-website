@@ -7,7 +7,9 @@ import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, DialogAc
 import WorkExperiencePage from './pages/work-experience';
 import AboutPage from './pages/about';
 import ProjectPage from './pages/projects';
+
 import Navbar from "./components/navigation-bar";
+import VariableProximity from './components/VariableProximity';
 import HandTracker from './components/HandTracker';
 
 export default function Home() {
@@ -21,6 +23,8 @@ export default function Home() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const containerRef = useRef(null);
 
   return (
     <>
@@ -45,7 +49,21 @@ export default function Home() {
       <div style={{ height: '100vh'}}>
         <div style={{paddingTop:'7%'}}>
           <h3>Hi, I'm</h3>
-          <h1>Navya Khurana</h1>
+          {/* <h1>Navya Khurana</h1> */}
+          <div
+          ref={containerRef}
+          style={{position: 'relative'}}
+          >
+            <VariableProximity
+              label={'Navya Khurana'}
+              className={'variable-proximity-demo'}
+              fromFontVariationSettings="'wght' 400, 'opsz' 9"
+              toFontVariationSettings="'wght' 1000, 'opsz' 40"
+              containerRef={containerRef}
+              radius={200}
+              falloff='exponential'
+            />
+          </div>
           <h4>i mess around with data, ai, & whatever tech feels interesting (...and explore a lil design on the side).</h4>
         </div>
         <Navbar refs={refs} />
