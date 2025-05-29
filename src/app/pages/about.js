@@ -13,7 +13,7 @@ export default function AboutPage() {
           always curious, always learning, always building. 
           <br /> <br />
           beyond work, i’m usually deep in a playlist, swapping music recs with friends, or watching an f1 race. <br />
-          and sometimes playing mario kart.<br /><br />
+          and occasionally playing mario kart.<br /><br />
         </p>
 
         <button className="contact-me-button" onClick={() => window.location.href = `mailto:nkhurana@umd.edu`}>say hi!</button>
