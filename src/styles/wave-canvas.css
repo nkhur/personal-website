@@ -25,7 +25,6 @@
   margin-top: 10px;
   border-radius: 12px;
   opacity: 0;
-  transform: scaleX(-1);
   pointer-events: none;
   transition: opacity 0.3s ease;
 }
