@@ -46,7 +46,7 @@ export default function Home() {
         <div style={{paddingTop:'7%'}}>
           <h3>Hi, I'm</h3>
           <h1>Navya Khurana</h1>
-          <h4>i mess with data, ai, & other tech a bunch (...and explore a lil design on the side.)</h4>
+          <h4>i mess around with data, ai, & whatever tech feels interesting (...and explore a lil design on the side).</h4>
         </div>
         <Navbar refs={refs} />
       </div>
