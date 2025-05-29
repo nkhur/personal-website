@@ -5,3 +5,47 @@ h2 {
   font-size:36px;
   line-height: 70px;
 }
+
+p {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 18px;
+}
+
+.contact-me-button {
+  font-family: 'JetBrains Mono', monospace;
+  width: 130px;
+  height: 50px;
+  background-color: rgba(27, 37, 90, 0.3);
+  border: 1px solid white;
+}
+
+.github-button {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  margin-left: 15px;
+  width: 50px;
+  height: 50px;
+  background-image: url('https://cdn.pixabay.com/photo/2022/01/30/13/33/github-6980894_640.png');
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 50%;
+  /* padding: 5px; */
+}
+
+.linkedin-button {
+  display: inline-block;
+  vertical-align: middle;
+  box-sizing: border-box;
+  margin-left: 15px;
+  width: 50px;
+  height: 50px;
+  background-image: url('https://static.vecteezy.com/system/resources/previews/018/930/480/non_2x/linkedin-logo-linkedin-icon-transparent-free-png.png');
+  background-size: 150%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 50%;
+}
