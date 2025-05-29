@@ -33,13 +33,6 @@ TabPanel.propTypes = {
   value: PropTypes.number.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
 export default function WorkExperiencePage() {
   const [value, setValue] = React.useState(0);
 
