@@ -9,7 +9,7 @@ export default function AboutPage() {
 
       <div>
         <p>
-          interested in building tools that makes life better, not just faster. & designs that make tech feel alive. <br />
+          interested in building tools that make life better, not just faster. & designs that make tech feel alive. <br />
           always curious, always learning, always building. 
           <br /> <br />
           beyond work, i’m usually deep in a playlist, swapping music recs with friends, or watching an f1 race. <br /><br />
