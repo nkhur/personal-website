@@ -17,7 +17,7 @@ import {
 export default function WaveCanvas({ distance = 0, orientation = 0, roll = 0 }) {
   const containerRef = useRef(null);
   const uniformsRef = useRef();
-  const handDetails = useRef({distance: 0, roll: 0, orientationx: 0})
+  const handDetails = useRef({distance: 0.5, roll: 0, orientationx: 0})
 
   useEffect(() => {
     console.log("WaveCanvas mounted")
