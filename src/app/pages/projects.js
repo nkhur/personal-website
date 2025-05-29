@@ -65,8 +65,8 @@ export default function ProjectPage() {
             borderColor: 'divider',
             '& .MuiTab-root': {
               color: 'white',
-              fontFamily: 'Josefin Sans, sans-serif',
-              fontSize: '1rem',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: '15px',
               textTransform: 'none'
             },
             '& .Mui-selected': {
@@ -94,7 +94,7 @@ export default function ProjectPage() {
             <ul>
               <li>Built 3 ML models to predict a professor’s rating using the PlanetTerp API (similar to ratemyprofessor for UMD students) without using the actual rating as the feature. Tested to determine the best model, presented in a slide deck.</li>
             </ul>
-            <p>Tech Stack: Python (Pandas, scikit-learn) </p>
+            <Typography variant='p'>Tech Stack: Python (Pandas, scikit-learn) </Typography>
           </Typography>
         </TabPanel>
 

@@ -67,8 +67,8 @@ export default function WorkExperiencePage() {
             borderColor: 'divider',
             '& .MuiTab-root': {
               color: 'white',
-              fontFamily: 'Josefin Sans, sans-serif',
-              fontSize: '1rem',
+              fontFamily: 'JetBrains Mono, monospace',
+              fontSize: '15px',
               textTransform: 'none'
             },
             '& .Mui-selected': {
@@ -95,7 +95,7 @@ export default function WorkExperiencePage() {
               <li>Finding data using YouTube API for audience engagement with news channels + using NLP to drive insights (eg. averaging the sentiment analysis on comments, detecting curiosity-creating keywords in the title)</li>
               <li>Implementing tools to observe user interaction with the <a href="https://smart-story-agent.vercel.app/">“New View News” site</a> - under development as a more interactive and engaging news format.</li>
             </ul>
-            <p>Tech Stack: Python (Pandas, PyTorch, HuggingFace), TypeScript</p>
+            <Typography variant='p'>Tech Stack: Python (Pandas, PyTorch, HuggingFace), TypeScript</Typography>
           </Typography>
         </TabPanel>
         <TabPanel value={value} index={1}>
