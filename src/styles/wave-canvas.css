@@ -1,0 +1,37 @@
+.camera-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  z-index: 9999;
+}
+
+.camera-display-button {
+  width: 40px;
+  height: 40px;
+  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRy4vA8lRUxCwqjrHwvczKHAhekougiNDzVQ&s');
+  background-size: 60%;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.camera-feed {
+  width: 200px;
+  margin-top: 10px;
+  border-radius: 12px;
+  /* border: 2px solid white; */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.camera-wrapper:hover .camera-feed {
+  opacity: 1;
+  pointer-events: auto;
+}
