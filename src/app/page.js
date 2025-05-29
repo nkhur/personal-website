@@ -14,7 +14,7 @@ export default function Home() {
   const refs = {
     about: useRef(null),
     projects: useRef(null),
-    work_experience: useRef(null),
+    workExperience: useRef(null),
   };
 
   const [open, setOpen] = React.useState(true);
@@ -52,7 +52,7 @@ export default function Home() {
       </div>
       <div>
         <div ref={refs.about} style={{ height: '100vh'}}><AboutPage /></div>
-        <div ref={refs.work_experience} style={{ height: '100vh'}}><WorkExperiencePage /></div>
+        <div ref={refs.workExperience} style={{ height: '100vh'}}><WorkExperiencePage /></div>
         <div ref={refs.projects} style={{ height: '100vh'}}><ProjectPage /></div>
         <HandTracker />
       </div>

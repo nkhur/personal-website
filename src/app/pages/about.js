@@ -12,7 +12,7 @@ export default function AboutPage() {
           interested in building tools that makes life better, not just faster. & designs that make tech feel alive. <br />
           always curious, always learning, always building. 
           <br /> <br />
-          beyond work, i’m usually deep in a playlist, swapping music recs with friends, or watching an f1 race. <br />
+          beyond work, i’m usually deep in a playlist, swapping music recs with friends, or watching an f1 race. <br /><br />
           {/* i'm drawn to music, meaning, and the people who bring both. */}
         </p>
 

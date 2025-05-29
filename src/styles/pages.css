@@ -20,9 +20,6 @@ p {
 }
 
 .github-button {
-  display: inline-block;
-  vertical-align: middle;
-  box-sizing: border-box;
   margin-left: 15px;
   width: 50px;
   height: 50px;
@@ -32,13 +29,9 @@ p {
   background-position: center;
   border: none;
   border-radius: 50%;
-  /* padding: 5px; */
 }
 
 .linkedin-button {
-  display: inline-block;
-  vertical-align: middle;
-  box-sizing: border-box;
   margin-left: 15px;
   width: 50px;
   height: 50px;
@@ -48,4 +41,10 @@ p {
   background-position: center;
   border: none;
   border-radius: 50%;
+}
+
+button {
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
 }
