@@ -92,7 +92,7 @@ export default function ProjectPage() {
             </Typography>
 
             <ul>
-              <li>Built 3 ML models to predict a professor’s rating using the PlanetTerp API (similar to ratemyprofessor for UMD students) without using the actual rating as the feature. Tested to determine the best model, presented in a slide deck.</li>
+              <li>Developed Random Forest, K-Nearest Neighbors, and Ridge Regression models to predict a professor’s rating using the PlanetTerp API (similar to ratemyprof for UMD students). Evaluated the models with 10-fold cross-validation, achieving upto 75.8% R² on test data. Presented in slide deck.</li>
             </ul>
             <Typography variant='p'>Tech Stack: Python (Pandas, scikit-learn) </Typography>
           </Typography>
