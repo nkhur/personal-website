@@ -4,6 +4,10 @@
 <!-- <p align="center"> The first iteration of  <a href="https://navyakhurana.vercel.app" target="_blank">navyakhurana.vercel.app</a>, built with Next.js & leveraging React Bits and Material UI. </p> -->
 <!-- ![image](https://github.com/user-attachments/assets/77357a31-ec1a-4cc8-82ee-139d0097cbe5)  -->
 
+<p align="center">created to showcase my work and interests, and also to explore designing an immersive tech experience and something visually distinct.</p>
+<img width="1306" src="https://github.com/nkhur/personal-website/blob/main/assets/website-screenshot.png">
+
+
 ### tech stack:
 
 - **Next.js**
