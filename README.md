@@ -14,7 +14,9 @@
 - **Three.js** – for animated particle visualization in the background. Adapted from [this repo](https://github.com/franky-adl/waves-value-noise/tree/master).
 - **Google Gemini's MediaPipe (HandLandmarker)** – for detecting hand gestures and calculating finger distance and hand orientation. These values are used to manipulate the background visualization in real-time.
 - **CSS + Material UI** – for styling and layout
-- **React Bits (Variable Proximity)** – animates the hover effect on my name
+- **React Bits (Variable Proximity)** – creates an interactive hover effect on my name based on cursor proximity
+- **Framer Motion** – handles smooth animations for gesture hint pop-ups
+- **Lottie** – for high-quality, lightweight animations to visualize hand gestures
 
 
 ### set-up and run locally:
