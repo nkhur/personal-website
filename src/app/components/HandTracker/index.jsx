@@ -5,6 +5,10 @@ import { drawConnectors, drawLandmarks } from "@mediapipe/drawing_utils";
 import { HandLandmarker, FilesetResolver } from "@mediapipe/tasks-vision";
 import '@/styles/wave-canvas.css'
 
+import Lottie from 'lottie-react';
+import handRotate from '@/app/components/animations/hand-rotate-animation.json';
+import handStretch from '@/app/components/animations/hand-stretch-animation.json';
+
 const HAND_CONNECTIONS = [
     [0, 1], [1, 2], [2, 3], [3, 4],        // Thumb
     [5, 6], [6, 7], [7, 8],                // Index finger
@@ -66,9 +70,7 @@ export default function HandTracker() {
     const [showPopup, setShowPopup] = useState(false);
     const [popupDismissed, setPopupDismissed] = useState(false);
     const [cameraClicked, setCameraClicked] = useState(false);
-
-
-
+    const [currentHint, setCurrentHint] = useState(null);
      
     useEffect(() => {
         const loadModel = async () => {
@@ -142,6 +144,11 @@ export default function HandTracker() {
                 await handLandmarker.setOptions({ runningMode: "VIDEO" });
                 setRunningMode("VIDEO");
             }
+
+            setCurrentHint(0);
+            setTimeout(() => setCurrentHint(1), 7000);
+            setTimeout(() => setCurrentHint(null), 12000);
+
             predictWebcam();
         };
     };
@@ -233,11 +240,57 @@ export default function HandTracker() {
                 pointerEvents: 'auto',
             }}>
                 <p style={{fontSize:'14px', margin: '0px', fontFamily: "'Josefin Sans', sans-serif"}}>Click on the camera button to activate hand tracking!</p>
-                <button onClick={() => {setPopupDismissed(true); setShowPopup(false)}} style={{ marginTop: '8px', backgroundColor: 'rgba(46, 24, 24, 0.62)', fontSize:'14px', fontFamily: "'Josefin Sans', sans-serif", color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px' }}>
+                <button onClick={() => {
+                    setPopupDismissed(true); 
+                    setShowPopup(false); 
+                    }
+                }
+                style={{ marginTop: '8px', backgroundColor: 'rgba(46, 24, 24, 0.62)', fontSize:'14px', fontFamily: "'Josefin Sans', sans-serif", color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px' }}>
                 Dismiss
                 </button>
             </div>
             )}
+
+            {currentHint !== null && webcamRunning && (
+            <div style={{
+                position: 'fixed',
+                bottom: '10px',
+                right: '20px',
+                backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                color: 'white',
+                padding: '12px',
+                borderRadius: '8px',
+                zIndex: 10001,
+                textAlign: 'center',
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+            }}>
+                <button style={{position: 'absolute', top: '5px', right: '5px', color: 'white'}} onClick={() => setCurrentHint(null)}>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        style={{ width: '24px', height: '24px',}}
+                    >
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                    </svg>
+                </button>
+                <p style={{ fontSize: '14px', margin: 0 , fontFamily: "'Josefin Sans', sans-serif", width: '200px',}}>
+                    {currentHint === 0 && "Rotate your hand like you're turning a knob — then try flipping it from palm-up to palm-down"}
+                    {currentHint === 1 && "Try stretching your fingers"}
+                </p>
+                <Lottie
+                    animationData={currentHint === 0 ? handRotate : handStretch}
+                    loop={true}
+                    autoplay={true}
+                    style={{ height: 100, margin: '0px' }}
+                />
+            </div>
+            )}
+
 
             <div className="camera-wrapper">
                 <button className="camera-display-button" onClick={isVisualizationChangingButton}/>
