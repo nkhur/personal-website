@@ -63,6 +63,11 @@ export default function HandTracker() {
         orientation: { x: 0, y: 0, z: 0 },
         roll: 0,
     });
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupDismissed, setPopupDismissed] = useState(false);
+    const [cameraClicked, setCameraClicked] = useState(false);
+
+
 
      
     useEffect(() => {
@@ -85,6 +90,19 @@ export default function HandTracker() {
         loadModel();
     }, []);
 
+    // to check if the camera button has been clicked.
+    useEffect(() => {
+    const timer = setTimeout(() => {
+        if (!cameraClicked && !popupDismissed) {
+        setShowPopup(true);
+        }
+    }, 5000);
+
+    return () => clearTimeout(timer);
+    }, [cameraClicked, popupDismissed]);
+
+
+
     const smoothValue = (prev, next, alpha = 0.2) =>
         prev * (1 - alpha) + next * alpha;
 
@@ -96,6 +114,7 @@ export default function HandTracker() {
 
 
     const isVisualizationChangingButton = async () => {
+        setCameraClicked(true);
         if (webcamRunning === true) {
             setWebcamRunning(false);
             videoRef.current.srcObject  = null;
@@ -199,6 +218,27 @@ export default function HandTracker() {
     
     return (
         <div>
+            {showPopup && (
+            <div style={{
+                position: 'fixed',
+                top: '70px',
+                right: '20px',
+                backgroundColor: 'rgba(0, 0, 0, 0.62)',
+                maxWidth: '180px',
+                color: 'white',
+                padding: '10px',
+                borderRadius: '8px',
+                zIndex: 1000,
+                textAlign: 'right',
+                pointerEvents: 'auto',
+            }}>
+                <p style={{fontSize:'14px', margin: '0px', fontFamily: "'Josefin Sans', sans-serif"}}>Click on the camera button to activate hand tracking!</p>
+                <button onClick={() => {setPopupDismissed(true); setShowPopup(false)}} style={{ marginTop: '8px', backgroundColor: 'rgba(46, 24, 24, 0.62)', fontSize:'14px', fontFamily: "'Josefin Sans', sans-serif", color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px' }}>
+                Dismiss
+                </button>
+            </div>
+            )}
+
             <div className="camera-wrapper">
                 <button className="camera-display-button" onClick={isVisualizationChangingButton}/>
                 <video
@@ -221,6 +261,7 @@ export default function HandTracker() {
                     width: "640px",
                     height: "480px",
                     zIndex: 2,
+                    pointerEvents: 'none',
                 }}
             />
 
