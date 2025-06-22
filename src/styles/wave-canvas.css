@@ -24,12 +24,12 @@
   width: 200px;
   margin-top: 10px;
   border-radius: 12px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-.camera-wrapper:hover .camera-feed {
   opacity: 1;
   pointer-events: auto;
+  /* transition: opacity 0.3s ease; */
 }
+
+/* .camera-wrapper:hover .camera-feed {
+  opacity: 1;
+  pointer-events: auto;
+} */
