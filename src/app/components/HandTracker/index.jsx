@@ -8,6 +8,7 @@ import '@/styles/wave-canvas.css'
 import Lottie from 'lottie-react';
 import handRotate from '@/app/components/animations/hand-rotate-animation.json';
 import handStretch from '@/app/components/animations/hand-stretch-animation.json';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const HAND_CONNECTIONS = [
     [0, 1], [1, 2], [2, 3], [3, 4],        // Thumb
@@ -71,7 +72,9 @@ export default function HandTracker() {
     const [popupDismissed, setPopupDismissed] = useState(false);
     const [cameraClicked, setCameraClicked] = useState(false);
     const [currentHint, setCurrentHint] = useState(null);
+    const [hintSequenceStarted, setHintSequenceStarted] = useState(false);
     const [closeHintPopups, setCloseHintPopups] = useState(false);
+    const hintTimers = useRef([]);
      
     useEffect(() => {
         const loadModel = async () => {
@@ -99,12 +102,10 @@ export default function HandTracker() {
         if (!cameraClicked && !popupDismissed) {
         setShowPopup(true);
         }
-    }, 5000);
+    }, 10000);
 
     return () => clearTimeout(timer);
     }, [cameraClicked, popupDismissed]);
-
-
 
     const smoothValue = (prev, next, alpha = 0.2) =>
         prev * (1 - alpha) + next * alpha;
@@ -121,6 +122,11 @@ export default function HandTracker() {
         if (webcamRunning === true) {
             setWebcamRunning(false);
             videoRef.current.srcObject  = null;
+
+            hintTimers.current.forEach(clearTimeout);
+            hintTimers.current = [];
+            setCurrentHint(null);
+            setHintSequenceStarted(false);
         } else {
             enableWebcam();
         }
@@ -146,13 +152,28 @@ export default function HandTracker() {
                 setRunningMode("VIDEO");
             }
 
-            setTimeout(() => setCurrentHint(0), 500);
-            setTimeout(() => setCurrentHint(1), 7500);
-            setTimeout(() => setCurrentHint(null), 12000);
-
             predictWebcam();
         };
     };
+
+    useEffect(() => {
+        // Cleanup existing timers on change
+        hintTimers.current.forEach(clearTimeout);
+        hintTimers.current = [];
+
+        if (webcamRunning) {
+            if (!hintSequenceStarted) {
+                setHintSequenceStarted(true);
+                setCurrentHint(0);
+                const hint1 = setTimeout(() => setCurrentHint(1), 7500);
+                const hint2 = setTimeout(() => setCurrentHint(null), 12000);
+                hintTimers.current.push(hint1, hint2);
+            }
+        } else {
+            setCurrentHint(null);
+        }
+    }, [webcamRunning]);
+
     
     const predictWebcam = async () => {
         const video = videoRef.current;
@@ -226,74 +247,90 @@ export default function HandTracker() {
     
     return (
         <div>
-            {showPopup && (
-            <div style={{
-                position: 'fixed',
-                top: '70px',
-                right: '20px',
-                backgroundColor: 'rgba(0, 0, 0, 0.62)',
-                maxWidth: '180px',
-                color: 'white',
-                padding: '10px',
-                borderRadius: '8px',
-                zIndex: 1000,
-                textAlign: 'right',
-                pointerEvents: 'auto',
-            }}>
-                <p style={{fontSize:'14px', margin: '0px', fontFamily: "'Josefin Sans', sans-serif"}}>Click on the camera button to activate hand tracking!</p>
-                <button onClick={() => {
-                    setPopupDismissed(true); 
-                    setShowPopup(false); 
+            <AnimatePresence>
+                {showPopup && (
+                <motion.div 
+                    key="popup"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 30 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                        position: 'fixed',
+                        top: '70px',
+                        right: '20px',
+                        backgroundColor: 'rgba(0, 0, 0, 0.62)',
+                        maxWidth: '180px',
+                        color: 'white',
+                        padding: '10px',
+                        borderRadius: '8px',
+                        zIndex: 1000,
+                        textAlign: 'right',
+                        pointerEvents: 'auto',
+                    }}
+                >
+                    <p style={{fontSize:'14px', margin: '0px', fontFamily: "'Josefin Sans', sans-serif"}}>Click on the camera button to activate hand tracking!</p>
+                    <button onClick={() => {
+                        setPopupDismissed(true); 
+                        setShowPopup(false); 
+                        }
                     }
-                }
-                style={{ marginTop: '8px', backgroundColor: 'rgba(46, 24, 24, 0.62)', fontSize:'14px', fontFamily: "'Josefin Sans', sans-serif", color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px' }}>
-                Dismiss
-                </button>
-            </div>
-            )}
+                    style={{ marginTop: '8px', backgroundColor: 'rgba(46, 24, 24, 0.62)', fontSize:'14px', fontFamily: "'Josefin Sans', sans-serif", color: 'white', padding: '4px 8px', border: 'none', borderRadius: '4px' }}>
+                    Dismiss
+                    </button>
+                </motion.div>
+                )}
+            
 
-            {currentHint !== null && webcamRunning && !closeHintPopups &&(
-            <div style={{
-                position: 'fixed',
-                bottom: '10px',
-                right: '20px',
-                backgroundColor: 'rgba(0, 0, 0, 0.7)',
-                color: 'white',
-                padding: '12px',
-                borderRadius: '8px',
-                zIndex: 10001,
-                pointerEvents: 'auto',
-                textAlign: 'center',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                transition: 'opacity 0.4s ease, transform 0.4s ease',
-            }}>
-                <button style={{position: 'absolute', top: '5px', right: '5px', color: 'white', cursor: 'pointer', zIndex: 100002}} onClick={() => setCloseHintPopups(true)}>
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        style={{ width: '24px', height: '24px',}}
-                    >
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-                    </svg>
-                </button>
-                <p style={{ fontSize: '14px', margin: 0 , fontFamily: "'Josefin Sans', sans-serif", width: '200px',}}>
-                    {currentHint === 0 && "Rotate your hand like you're turning a knob — then try flipping it from palm-up to palm-down"}
-                    {currentHint === 1 && "Try stretching your fingers"}
-                </p>
-                <Lottie
-                    animationData={currentHint === 0 ? handRotate : handStretch}
-                    loop={true}
-                    autoplay={true}
-                    style={{ height: 100, margin: '0px' }}
-                />
-            </div>
-            )}
-
+                {currentHint !== null && webcamRunning && !closeHintPopups &&(
+                <motion.div 
+                    key="popup"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 30 }}
+                    transition={{ duration: 0.5 }}
+                    style={{
+                        position: 'fixed',
+                        bottom: '10px',
+                        right: '20px',
+                        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+                        color: 'white',
+                        padding: '12px',
+                        borderRadius: '8px',
+                        zIndex: 10001,
+                        pointerEvents: 'auto',
+                        textAlign: 'center',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        transition: 'opacity 0.4s ease, transform 0.4s ease',
+                    }}
+                >
+                    <button style={{position: 'absolute', top: '5px', right: '5px', color: 'white', cursor: 'pointer', zIndex: 100002}} onClick={() => setCloseHintPopups(true)}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            style={{ width: '24px', height: '24px',}}
+                        >
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <p style={{ fontSize: '14px', margin: 0 , fontFamily: "'Josefin Sans', sans-serif", width: '200px',}}>
+                        {currentHint === 0 && "Rotate your hand like you're turning a knob — then try flipping it from palm-up to palm-down"}
+                        {currentHint === 1 && "And try stretching your fingers!"}
+                    </p>
+                    <Lottie
+                        animationData={currentHint === 0 ? handRotate : handStretch}
+                        loop={true}
+                        autoplay={true}
+                        style={{ height: 100, margin: '0px' }}
+                    />
+                </motion.div>
+                )}
+            </AnimatePresence>
 
             <div className="camera-wrapper">
                 <button className="camera-display-button" onClick={isVisualizationChangingButton}/>
