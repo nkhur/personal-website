@@ -303,7 +303,6 @@ export default function HandTracker() {
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        transition: 'opacity 0.4s ease, transform 0.4s ease',
                     }}
                 >
                     <button style={{position: 'absolute', top: '5px', right: '5px', color: 'white', cursor: 'pointer', zIndex: 100002}} onClick={() => setCloseHintPopups(true)}>
