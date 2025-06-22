@@ -187,7 +187,7 @@ export default function WaveCanvas({ distance = 0, orientation = 0, roll = 0 }) 
         width: '100vw',
         height: '100vh',
         zIndex: -1,
-        // pointerEvents: 'none'
+        pointerEvents: 'none'
       }}
     />
   );
