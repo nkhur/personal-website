@@ -55,9 +55,9 @@ export default function HandTracker() {
     const [webcamRunning, setWebcamRunning] = useState(false);
     let lastVideoTime = -1;
     const [runningMode, setRunningMode] = useState("IMAGE");
-    const [fingerDistance, setFingerDistance] = useState(0);
-    const [handOrientation, setHandOrientation] = useState(0);
-    const [handRoll, setHandRoll] = useState(0);
+    const [fingerDistance, setFingerDistance] = useState(0.2);
+    const [handOrientation, setHandOrientation] = useState({ x: -0.1, y: -0.2, z: -0.2});
+    const [handRoll, setHandRoll] = useState(-1);
     const smoothed = useRef({
         fingerDistance: 0,
         orientation: { x: 0, y: 0, z: 0 },
@@ -158,15 +158,12 @@ export default function HandTracker() {
 
                         const thumbIndexDistance = distance(thumbTop, indexTop);
                         console.log("Thumb–Index Distance:", thumbIndexDistance);
-                        // setFingerDistance(thumbIndexDistance);
                         
                         const orientation = getPalmNormal(wrist, indexBase, pinkyBase);
                         console.log("Hand orientation", orientation);
-                        // setHandOrientation(orientation);
 
                         const roll = getRollAngle(indexBase, pinkyBase);
                         console.log("Hand roll", roll);
-                        // setHandRoll(roll);
 
                         // Smooth the values
                         smoothed.current.fingerDistance = smoothValue(smoothed.current.fingerDistance, thumbIndexDistance);
