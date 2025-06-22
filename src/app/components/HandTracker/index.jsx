@@ -71,6 +71,7 @@ export default function HandTracker() {
     const [popupDismissed, setPopupDismissed] = useState(false);
     const [cameraClicked, setCameraClicked] = useState(false);
     const [currentHint, setCurrentHint] = useState(null);
+    const [closeHintPopups, setCloseHintPopups] = useState(false);
      
     useEffect(() => {
         const loadModel = async () => {
@@ -145,8 +146,8 @@ export default function HandTracker() {
                 setRunningMode("VIDEO");
             }
 
-            setCurrentHint(0);
-            setTimeout(() => setCurrentHint(1), 7000);
+            setTimeout(() => setCurrentHint(0), 500);
+            setTimeout(() => setCurrentHint(1), 7500);
             setTimeout(() => setCurrentHint(null), 12000);
 
             predictWebcam();
@@ -251,7 +252,7 @@ export default function HandTracker() {
             </div>
             )}
 
-            {currentHint !== null && webcamRunning && (
+            {currentHint !== null && webcamRunning && !closeHintPopups &&(
             <div style={{
                 position: 'fixed',
                 bottom: '10px',
@@ -261,12 +262,14 @@ export default function HandTracker() {
                 padding: '12px',
                 borderRadius: '8px',
                 zIndex: 10001,
+                pointerEvents: 'auto',
                 textAlign: 'center',
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
+                transition: 'opacity 0.4s ease, transform 0.4s ease',
             }}>
-                <button style={{position: 'absolute', top: '5px', right: '5px', color: 'white'}} onClick={() => setCurrentHint(null)}>
+                <button style={{position: 'absolute', top: '5px', right: '5px', color: 'white', cursor: 'pointer', zIndex: 100002}} onClick={() => setCloseHintPopups(true)}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
