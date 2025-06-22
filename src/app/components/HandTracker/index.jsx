@@ -332,6 +332,20 @@ export default function HandTracker() {
             </AnimatePresence>
 
             <div className="camera-wrapper">
+                {webcamRunning && (
+                    <div
+                    style={{
+                        position: 'absolute',
+                        top: '0px',
+                        right: '0px',
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgba(66, 50, 124, 0.62)',
+                        zIndex: 0,
+                    }}
+                    />
+                )}
                 <button className="camera-display-button" onClick={isVisualizationChangingButton}/>
                 <video
                     ref={videoRef}

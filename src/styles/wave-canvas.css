@@ -11,13 +11,14 @@
 .camera-display-button {
   width: 40px;
   height: 40px;
-  background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRy4vA8lRUxCwqjrHwvczKHAhekougiNDzVQ&s');
+  background-image: url('https://img.icons8.com/?size=100&id=5401&format=png&color=FFFFFF');
   background-size: 60%;
   background-repeat: no-repeat;
   background-position: center;
   border: none;
   border-radius: 50%;
   cursor: pointer;
+  z-index: 100;
 }
 
 .camera-feed {
