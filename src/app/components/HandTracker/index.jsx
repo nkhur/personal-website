@@ -58,6 +58,12 @@ export default function HandTracker() {
     const [fingerDistance, setFingerDistance] = useState(0);
     const [handOrientation, setHandOrientation] = useState(0);
     const [handRoll, setHandRoll] = useState(0);
+    const smoothed = useRef({
+        fingerDistance: 0,
+        orientation: { x: 0, y: 0, z: 0 },
+        roll: 0,
+    });
+
      
     useEffect(() => {
         const loadModel = async () => {
@@ -78,6 +84,16 @@ export default function HandTracker() {
         
         loadModel();
     }, []);
+
+    const smoothValue = (prev, next, alpha = 0.2) =>
+        prev * (1 - alpha) + next * alpha;
+
+    const smoothVec3 = (prev, next, alpha = 0.2) => ({
+        x: smoothValue(prev.x, next.x, alpha),
+        y: smoothValue(prev.y, next.y, alpha),
+        z: smoothValue(prev.z, next.z, alpha),
+    });
+
 
     const isVisualizationChangingButton = async () => {
         if (webcamRunning === true) {
@@ -142,15 +158,25 @@ export default function HandTracker() {
 
                         const thumbIndexDistance = distance(thumbTop, indexTop);
                         console.log("Thumb–Index Distance:", thumbIndexDistance);
-                        setFingerDistance(thumbIndexDistance);
+                        // setFingerDistance(thumbIndexDistance);
                         
                         const orientation = getPalmNormal(wrist, indexBase, pinkyBase);
                         console.log("Hand orientation", orientation);
-                        setHandOrientation(orientation);
+                        // setHandOrientation(orientation);
 
                         const roll = getRollAngle(indexBase, pinkyBase);
                         console.log("Hand roll", roll);
-                        setHandRoll(roll);
+                        // setHandRoll(roll);
+
+                        // Smooth the values
+                        smoothed.current.fingerDistance = smoothValue(smoothed.current.fingerDistance, thumbIndexDistance);
+                        smoothed.current.orientation = smoothVec3(smoothed.current.orientation, orientation);
+                        smoothed.current.roll = smoothValue(smoothed.current.roll, roll);
+
+                        // Set the smoothed values into state
+                        setFingerDistance(smoothed.current.fingerDistance);
+                        setHandOrientation(smoothed.current.orientation);
+                        setHandRoll(smoothed.current.roll);
                         
                         drawConnectors(ctx, landmarks, HAND_CONNECTIONS, {
                             color: "#00FF00",

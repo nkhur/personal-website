@@ -26,7 +26,7 @@
   border-radius: 12px;
   opacity: 1;
   pointer-events: auto;
-  /* transition: opacity 0.3s ease; */
+  transition: opacity 0.3s ease;
 }
 
 /* .camera-wrapper:hover .camera-feed {
