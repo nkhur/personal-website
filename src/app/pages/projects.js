@@ -51,7 +51,6 @@ export default function ProjectPage() {
           bgcolor: 'rgba(0,0,0,0.5)',
           display: 'flex',
           flexDirection:'column',
-          overflowX:'auto',
           width: '100%',
           padding: '2rem',
           borderRadius: '12px',
