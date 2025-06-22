@@ -69,9 +69,9 @@ export default function Home() {
         <Navbar refs={refs} />
       </div>
       <div>
-        <div ref={refs.about} style={{ height: '100vh'}}><AboutPage /></div>
-        <div ref={refs.workExperience} style={{ height: '100vh'}}><WorkExperiencePage /></div>
-        <div ref={refs.projects} style={{ height: '100vh'}}><ProjectPage /></div>
+        <div ref={refs.about} style={{ minHeight: '100vh', paddingTop: '5vh', paddingBottom: '5vh' }}><AboutPage /></div>
+        <div ref={refs.workExperience} style={{ minHeight: '100vh', paddingTop: '5vh', paddingBottom: '5vh' }}><WorkExperiencePage /></div>
+        <div ref={refs.projects} style={{ minHeight: '100vh', paddingTop: '5vh', paddingBottom: '5vh' }}><ProjectPage /></div>
         <HandTracker />
       </div>
     </>
