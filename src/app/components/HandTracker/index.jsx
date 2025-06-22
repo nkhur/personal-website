@@ -57,7 +57,7 @@ export default function HandTracker() {
     const [runningMode, setRunningMode] = useState("IMAGE");
     const [fingerDistance, setFingerDistance] = useState(0.2);
     const [handOrientation, setHandOrientation] = useState({ x: -0.1, y: -0.2, z: -0.2});
-    const [handRoll, setHandRoll] = useState(-1);
+    const [handRoll, setHandRoll] = useState(-0.5);
     const smoothed = useRef({
         fingerDistance: 0,
         orientation: { x: 0, y: 0, z: 0 },
