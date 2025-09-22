@@ -76,7 +76,8 @@ export default function WorkExperiencePage() {
               fontWeight: 'bold'
             }
           }}
-        >
+        > 
+          <Tab label="/ uc-davis-health"/>
           <Tab label="/ digital-engagement-lab"/>
           <Tab label="/ passionfruit"/>
           <Tab label="/ shah-lab"/>
@@ -84,11 +85,25 @@ export default function WorkExperiencePage() {
         <TabPanel value={value} index={0}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
-            <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Research Assistant @ Digital Engagement Lab, UMD</Typography>
+            <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Undergraduate Researcher @ UC Davis Health</Typography>
             <Typography
               variant="subtitle1"
               sx={{ color: '#bbbbbb', fontFamily: 'Josefin Sans, sans-serif', marginBottom: '1rem' }}> 
-              March 2025 – Present 
+              Aug 2025 - Present
+            </Typography>
+            <Typography variant='p'>Leading iterative, end-to-end development of an Epic SMART on FHIR app for clinicians to personalize BP targets. Helps clinicians and patients visualize benefit-risk tradeoffs and take informed decisions based on real-time data. </Typography>
+            <br />
+            <Typography variant='p'>Tech Stack: Epic Database (SMART on FHIR), TypeScript, Next.js</Typography>
+          </Typography>
+        </TabPanel>
+        <TabPanel value={value} index={1}>
+          <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
+
+            <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Undergraduate Researcher @ Digital Engagement Lab, UMD</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: '#bbbbbb', fontFamily: 'Josefin Sans, sans-serif', marginBottom: '1rem' }}> 
+              March 2025 – June 2025 
             </Typography>
             <Typography variant='p'>Working towards the lab’s mission to reimagine how young audiences engage with political and news content through data, AI, and interaction design.</Typography>
             <ul>
@@ -98,7 +113,7 @@ export default function WorkExperiencePage() {
             <Typography variant='p'>Tech Stack: Python (Pandas, PyTorch, HuggingFace), TypeScript</Typography>
           </Typography>
         </TabPanel>
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={2}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
             <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Software Engineer Intern @ Passionfruit, NYC</Typography>
@@ -118,10 +133,10 @@ export default function WorkExperiencePage() {
             <Typography variant='p'>Tech Stack: Node.js, Next.js, Python, OpenAI, MongoDB</Typography>
           </Typography>
         </TabPanel>
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={3}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
-            <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Research Assistant @ Shah Lab, UMD</Typography>
+            <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Undergraduate Researcher @ Shah Lab, UMD</Typography>
             <Typography
               variant="subtitle1"
               sx={{ color: '#bbbbbb', fontFamily: 'Josefin Sans, sans-serif', marginBottom: '1rem' }}> 
