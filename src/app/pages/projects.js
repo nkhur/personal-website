@@ -74,14 +74,34 @@ export default function ProjectPage() {
               fontWeight: 'bold'
             }
           }}
-        >
+        > 
+          <Tab label="/ hack4impact-umd"/>
           <Tab label="/ prof-rating-predictor"/>
           <Tab label="/ microcaml-compiler-eval"/>
           <Tab label="/ shell-implementation"/>
           <Tab label="/ solve-graph-maze"/>
           <Tab label="/ safesites"/>
         </Tabs>
+
         <TabPanel value={value} index={0}>
+          <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
+
+            <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Hack4Impact-UMD: For All Ages</Typography>
+            <Typography
+              variant="subtitle1"
+              sx={{ color: '#bbbbbb', fontFamily: 'Josefin Sans, sans-serif', marginBottom: '1rem' }}> 
+              Sept 2025 - Present
+            </Typography>
+
+            <ul>
+              <li>Working with team & Microsoft Mentors to build tools for non-profit For All Ages.</li>
+            </ul>
+            <Typography variant='p'>Tech Stack: FERN (Firebase, Express, React, Node.js) </Typography>
+          </Typography>
+        </TabPanel>
+
+
+        <TabPanel value={value} index={1}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
             <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Professor Rating Predictor</Typography>
@@ -98,7 +118,7 @@ export default function ProjectPage() {
           </Typography>
         </TabPanel>
 
-        <TabPanel value={value} index={1}>
+        <TabPanel value={value} index={2}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
             <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>MicroCaml Language Development</Typography>
@@ -118,7 +138,7 @@ export default function ProjectPage() {
           </Typography>
         </TabPanel>
 
-        <TabPanel value={value} index={2}>
+        <TabPanel value={value} index={3}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
             <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Shell Implementation</Typography>
@@ -137,7 +157,7 @@ export default function ProjectPage() {
           </Typography>
         </TabPanel>
 
-        <TabPanel value={value} index={3}>
+        <TabPanel value={value} index={4}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
             <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>Finding All Possible Solutions of a Maze</Typography>
@@ -156,7 +176,7 @@ export default function ProjectPage() {
           </Typography>
         </TabPanel>
 
-        <TabPanel value={value} index={4}>
+        <TabPanel value={value} index={5}>
           <Typography sx={{ color: 'white', fontSize: '1.1rem', fontFamily: 'Josefin Sans, sans-serif' }}>
 
             <Typography variant='h5' sx={{fontFamily: 'Josefin Sans, sans-serif'}}>SafeSites</Typography>
