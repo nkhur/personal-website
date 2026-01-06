@@ -36,7 +36,7 @@ export default function Home() {
         <DialogContent>
           <DialogContentText>
             This website uses gestures for visualization control - move, twist, and stretch your hand to change the background. Toggle this 
-            option using the camera button on the top right corner of the site. Hover over the button to view the camera frame.
+            option using the camera button on the top right corner of the site.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
