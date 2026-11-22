@@ -66,7 +66,7 @@ export default function Hero() {
       </p>
       <p className="hero-tag">{profile.tagline}</p>
 
-      <a href="#notes" className="scroll-cue label">press play <span aria-hidden="true">↓</span></a>
+      <a href="#about" className="scroll-cue label">scroll <span aria-hidden="true">↓</span></a>
     </section>
   );
 }

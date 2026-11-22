@@ -18,13 +18,14 @@ export default function Outro() {
   };
 
   return (
-    <section id="outro" className="section outro" data-palette="5">
-      <Reveal><p className="label">05 — outro</p></Reveal>
+    <section id="contact" className="section outro" data-palette="5">
+      <Reveal><p className="label">05 — contact</p></Reveal>
       <Reveal as="h2" className="outro-line">thanks for <em>listening.</em></Reveal>
       <Reveal delay={0.1} className="links">
         <button className="pill big" onClick={copy}>{copied ? 'copied ✓' : profile.email}</button>
         <a className="pill" href={profile.github} target="_blank" rel="noreferrer">github ↗</a>
         <a className="pill" href={profile.linkedin} target="_blank" rel="noreferrer">linkedin ↗</a>
+        <a className="pill" href={profile.resume} target="_blank" rel="noreferrer">resume ↗</a>
       </Reveal>
       <p className="label foot">© {new Date().getFullYear()} navya khurana</p>
     </section>

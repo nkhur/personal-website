@@ -1,6 +1,5 @@
 // All site content lives here. Edit freely — the components just render this.
-// NOTE: dates/roles are carried over from the previous version of the site.
-// Anything newer than Sept 2025 still needs to be added by you.
+// Source of truth: public/resume.pdf (updated Nov 2026).
 
 export const profile = {
   name: 'Navya Khurana',
@@ -9,94 +8,148 @@ export const profile = {
     'i mess around with data, ai, and whatever tech feels interesting — and explore a little design on the side.',
   lede: 'i like building tools that make life better, not just faster — and interfaces that make tech feel alive.',
   notes: [
-    'right now that means clinical software at uc davis health, ai + news research at umd, and a lot of curiosity in between.',
+    'i’m finishing a computer science degree (with a math minor) at umd in december 2026. lately that’s meant clinical decision-support research at uc davis health, a summer at visa, and ai agents on the side.',
     "outside of code i'm usually deep in a playlist, swapping music recs with friends, or losing at mario kart.",
   ],
   credits: [
-    ['studying', 'computer science @ umd'],
-    ['currently', 'epic smart on fhir app @ uc davis health'],
+    ['studying', 'computer science + math @ umd · dec 2026'],
+    ['currently', 'research software engineer @ uc davis health'],
+    ['this summer', 'software engineer intern @ visa'],
     ['on repeat', 'whatever a friend just sent me'],
     ['also', 'mario kart (badly)'],
   ],
   email: 'nkhurana@umd.edu',
   github: 'https://github.com/nkhur',
   linkedin: 'https://linkedin.com/in/navya-khurana',
+  resume: '/resume.pdf',
 };
 
-// Atlas nodes, in chronological order. `pos` = [x%, y%] on the map.
-// Relationships between nodes are computed from shared `stack` entries.
+// Atlas nodes, in chronological order (oldest first). `pos` = [x%, y%] on the map;
+// keep x increasing so the map reads left to right in time.
 export const atlas = [
   {
     id: 'shah',
     title: 'Shah Lab',
-    role: 'Undergraduate Researcher · UMD ECE',
+    role: 'Systems & Software Researcher · UMD',
     when: 'Feb — Sep 2024',
-    pos: [11, 66],
-    blurb:
-      "A neural interface for restoring motor control in Parkinson's patients with closed-loop brain stimulation. I helped deliver the end-to-end system for real-time stimulation, recording and visualization.",
+    start: 'Feb 2024',
+    end: 'Sep 2024',
+    pos: [10, 80],
+    color: '#4fe3ff',
+    art: { kind: 'neural', dx: 150, dy: -150 },
+    blurb: 'Closed-loop brain stimulation for Parkinson’s research, in UMD’s ECE department.',
     points: [
-      'Python GUI that decodes neural signals to and from the Intan RHS 2000 board and streams them into OpenEphys, with user-defined alerts for matching patterns.',
-      'Live stimulation: triggers outputs based on incoming signal characteristics for closed-loop experiments.',
-      'Wrote SPI command interpreters that generate .coe files for loading stimulation patterns onto the board.',
+      'Built a Python control system for recording, stimulation and visualization across 32 channels.',
+      'Added SPI-driven FPGA pattern loading, enabling further research in the lab.',
     ],
-    stack: ['Python', 'SPI', 'OpenEphys'],
+    stack: ['Python', 'SPI', 'FPGA'],
   },
   {
     id: 'passionfruit',
     title: 'Passionfruit',
-    role: 'Software Engineer Intern · NYC',
+    role: 'Software Engineer Intern · New York, NY',
     when: 'Jul — Sep 2024',
-    pos: [30, 28],
-    blurb:
-      'Startup backed by Stanford, StartX and CMU. Built ML + backend features marketing teams use to generate, evaluate and optimize SEO content at scale.',
+    start: 'Jul 2024',
+    end: 'Sep 2024',
+    pos: [26, 22],
+    color: '#ffa24a',
+    art: { kind: 'seo', dx: -40, dy: 140 },
+    blurb: 'A startup backed by Stanford and CMU, building SEO tooling for marketing teams.',
     points: [
-      'Content ideas generator: scraped "People Also Ask" and top-ranking blog structure to auto-build LLM prompts.',
-      'Topical authority scorer: YAKE + BERT keywords and embedding cosine similarity to score how on-topic a post is.',
-      'Analytics chatbot: linear regression over historical site metrics to tie changes to specific SEO tasks.',
-      'Content editor: live keyword scoring, autosave and GPT rewrite suggestions.',
+      'Raised CTR and time on page by 15–20% across 12+ clients with a Performance Analytics Chatbot: it analyzed 18 months of MongoDB campaign data, found action–impact relationships with linear regression, and delivered LLM-augmented recommendations.',
+      'Developed a Topical Authority Scorer that gives client content a quantitative SEO relevance score, cutting manual SEO review by 20+ hours. Used YAKE + BERT keyword extraction, cosine similarity of text embeddings, and LLM-based evaluation.',
     ],
-    stack: ['Node.js', 'Next.js', 'Python', 'OpenAI', 'MongoDB'],
+    stack: ['MongoDB', 'Python', 'BERT', 'YAKE', 'LLMs'],
   },
   {
     id: 'del',
     title: 'Digital Engagement Lab',
-    role: 'Undergraduate Researcher · UMD',
+    role: 'Applied ML Researcher · UMD',
     when: 'Mar — Jun 2025',
-    pos: [50, 68],
-    blurb:
-      'Reimagining how young audiences engage with political and news content through data, AI, and interaction design.',
+    start: 'Mar 2025',
+    end: 'Jun 2025',
+    pos: [42, 68],
+    color: '#ff5fc8',
+    art: { kind: 'news', dx: 30, dy: -160 },
+    blurb: 'Reimagining how young audiences engage with political and news content through data, AI and interaction design.',
     points: [
-      'Audience sentiment: pulled video metadata and every comment through the YouTube Data API, then ran HuggingFace emotion + semantic models on comments, titles and transcripts to compare viewer sentiment with video intent.',
-      "New View News: the lab's AI-enhanced news reader. Wired in PostHog (heatmaps, click frequency, session replays) for event-level UX research, and started integrating news-story-viz for narrative visual summaries.",
+      'Built data ingestion and transformation pipelines to quantify viewer–content alignment across 1000+ videos, analyzing 1M+ YouTube comments with PyTorch classifiers to find engagement patterns.',
     ],
-    link: { label: 'new view news', href: 'https://smart-story-agent.vercel.app/' },
-    stack: ['Python', 'Pandas', 'PyTorch', 'HuggingFace', 'TypeScript', 'PostHog'],
+    stack: ['Python', 'PyTorch', 'YouTube data'],
   },
   {
     id: 'ucdavis',
     title: 'UC Davis Health',
-    role: 'Undergraduate Researcher',
+    role: 'Research Software Engineer · Sacramento, CA',
     when: 'Aug 2025 — now',
-    pos: [71, 30],
-    blurb:
-      'Leading end-to-end development of an Epic SMART on FHIR app that lets clinicians personalize blood-pressure targets — and helps clinicians and patients see benefit–risk tradeoffs from real-time data.',
-    points: [],
-    stack: ['SMART on FHIR', 'Epic', 'TypeScript', 'Next.js'],
+    start: 'Aug 2025',
+    end: 'present',
+    pos: [58, 18],
+    color: '#ff6a5a',
+    art: { kind: 'health', dx: -20, dy: 150 },
+    blurb: 'Working directly with Dr. Simon Benjamin Ascher on hypertension management.',
+    points: [
+      'Built an Epic EHR–integrated React.js clinical decision-support tool that models personalized hypertension benefit–risk tradeoffs with Bayesian analysis. Kaiser Permanente, UCSF and UCSD have confirmed it for pilot evaluation.',
+      'Formalized the Bayesian risk model in R, trained and tested on SPRINT trial data (9,316 enrolled). Leading the first-author manuscript.',
+    ],
+    stack: ['React', 'Epic EHR', 'R', 'Bayesian analysis'],
   },
   {
     id: 'h4i',
-    title: 'Hack4Impact UMD',
-    role: 'Developer · For All Ages',
-    when: 'Sep 2025 — now',
-    pos: [89, 62],
-    blurb: 'Building tools for the non-profit For All Ages, alongside a team and Microsoft mentors.',
-    points: [],
-    stack: ['Firebase', 'Express', 'React', 'Node.js'],
+    title: 'Hack4Impact',
+    role: 'Developer · For All Ages (non-profit)',
+    when: 'Sep 2025 — May 2026',
+    start: 'Sep 2025',
+    end: 'May 2026',
+    pos: [74, 78],
+    color: '#8f8bff',
+    art: { kind: 'impact', dx: -20, dy: -150 },
+    blurb: 'An ML-driven profile-matching system that connects senior citizens with volunteers, to reduce social isolation.',
+    points: [
+      'Built the rematching data pipeline: pulled low-score pairs from Firebase, generated embeddings and upserted them into Pinecone.',
+      'Integrated a new Express REST API layer to support the frontend workflows.',
+    ],
+    stack: ['Firebase', 'Express', 'Node.js', 'React', 'Pinecone'],
+  },
+  {
+    id: 'visa',
+    title: 'Visa',
+    role: 'Software Engineer Intern · Austin, TX',
+    when: 'Jun — Aug 2026',
+    start: 'Jun 2026',
+    end: 'Aug 2026',
+    pos: [90, 24],
+    color: '#ffd84a',
+    art: { kind: 'payments', dx: -40, dy: 150 },
+    blurb: 'Built a full-stack Spring Boot + React platform that automates SSH-driven payment-processing workflows for a new settlement system and 12 payment gateways.',
+    points: [
+      'Cut an operator workflow from 8+ manual steps to 3, taking task time from 20 minutes to under a minute for ~500+ internal users.',
+      'Halved job execution time by replacing single-threaded SSH with thread-pooled async workers and custom completion signaling, and moving job storage from an in-memory ConcurrentHashMap to H2.',
+    ],
+    stack: ['Spring Boot', 'React', 'Java', 'H2'],
   },
 ];
-export const atlasStart = 3; // which node is selected on load
+export const atlasStart = 0; // which node is selected on load (0 = the earliest)
 
 export const projects = [
+  {
+    title: 'CodeCanvas',
+    sub: 'visual scratchpads for llm code agents',
+    year: 'Fall 2025',
+    kind: 'codemap',
+    blurb:
+      'Co-built (team of 3) an LLM coding agent that reasons over a rendered visual codemap of a repo (Tree-sitter graph, Leiden clusters) plus cached memory, via MCP tools. On 7 Terminal-Bench 2.0 tasks against text-only and LocAgent baselines: 50% fewer backtracks (1.57 vs 3.14), 72% fewer hallucinations, 6% lower cost.',
+    stack: ['Python', 'Tree-sitter', 'MCP'],
+  },
+  {
+    title: 'Remi',
+    sub: 'hackprinceton fall 2025',
+    year: 'Fall 2025',
+    kind: 'agenda',
+    blurb:
+      'An intelligent meeting and voice assistant that orchestrates meeting analysis, email drafting and calendar events across Google Workspace to give a personalized daily overview. An automated agenda-tracking and suggestion pipeline sits on a Neo4j knowledge graph of task dependencies and context.',
+    stack: ['Electron.js', 'Python', 'Supabase', 'Neo4j', 'Render', 'ElevenLabs', 'Gemini'],
+  },
   {
     title: 'Professor Rating Predictor',
     sub: 'machine learning · planetterp',
@@ -146,13 +199,18 @@ export const projects = [
 export const studio = [
   {
     status: 'in progress',
-    title: 'turning news into visual stories',
-    text: 'integrating the open-source news-story-viz tool into New View News, so an article can become a narrative visual summary.',
+    title: 'a first-author paper',
+    text: 'writing up the bayesian hypertension benefit–risk model, trained and tested on SPRINT trial data (9,316 enrolled).',
   },
   {
     status: 'in progress',
-    title: 'benefit–risk, made visible',
-    text: 'iterating on how a clinician and a patient should see blood-pressure tradeoffs side by side, from live data.',
+    title: 'from model to clinic',
+    text: 'the epic-integrated decision-support tool has been confirmed by kaiser permanente, ucsf and ucsd for pilot evaluation.',
+  },
+  {
+    status: 'experiment',
+    title: 'agents that can see',
+    text: 'codecanvas teaches a coding agent to read a repo as a picture, not just text: fewer backtracks, fewer hallucinations.',
   },
   {
     status: 'experiment',
@@ -164,20 +222,24 @@ export const studio = [
 ];
 
 export const skillGroups = [
-  { id: 'languages', label: 'languages', items: ['Python', 'TypeScript', 'JavaScript', 'Java', 'C', 'OCaml'] },
+  {
+    id: 'languages',
+    label: 'languages',
+    items: ['JavaScript', 'TypeScript', 'Java', 'Python', 'Rust', 'C/C++', 'OpenMP', 'MPI', 'CUDA', 'R', 'HTML/CSS'],
+  },
+  {
+    id: 'frameworks',
+    label: 'frameworks',
+    items: ['Spring Boot', 'React', 'Node.js', 'Next.js', 'Express', 'Electron.js', 'JUnit', 'Flask', 'Puppeteer'],
+  },
+  {
+    id: 'infra',
+    label: 'databases + infra',
+    items: ['Postgres', 'MongoDB', 'Firebase', 'Supabase', 'Docker', 'Jenkins', 'Render', 'Git', 'Figma'],
+  },
   {
     id: 'ai',
-    label: 'ai + data',
-    items: ['PyTorch', 'HuggingFace', 'scikit-learn', 'pandas', 'OpenAI API', 'BERT', 'embeddings', 'regression'],
-  },
-  {
-    id: 'web',
-    label: 'web',
-    items: ['Next.js', 'React', 'Node.js', 'Express', 'Firebase', 'MongoDB', 'Streamlit'],
-  },
-  {
-    id: 'systems',
-    label: 'health + systems',
-    items: ['SMART on FHIR', 'Epic', 'PostHog', 'YouTube API', 'MediaPipe', 'SPI', 'OpenEphys'],
+    label: 'ai / ml',
+    items: ['PyTorch', 'CLIP', 'OpenCV', 'scikit-learn', 'pandas', 'OpenAI API', 'Gemini API', 'Pinecone', 'RAG'],
   },
 ];

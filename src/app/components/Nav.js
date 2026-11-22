@@ -1,41 +1,83 @@
 'use client';
 
+// Top bar: a small mark on the left, plain text links on the right (no box, no border).
+// Each link is a real path (/about, /experiences ...). Scrolling keeps the URL in sync,
+// and opening one of those paths directly scrolls to that section.
+
 import { useEffect, useState } from 'react';
 
-const LINKS = [
-  ['notes', 'notes'],
-  ['atlas', 'atlas'],
-  ['tracklist', 'tracks'],
-  ['studio', 'studio'],
-  ['outro', 'outro'],
-];
+const LINKS = ['about', 'experiences', 'projects', 'studio', 'contact'];
+const IDS = ['top', ...LINKS];
+const pathFor = (id) => (id === 'top' ? '/' : `/${id}`);
+const idFromPath = () => {
+  const slug = window.location.pathname.replace(/^\/|\/$/g, '');
+  return IDS.includes(slug) ? slug : 'top';
+};
+const scrollToId = (id, smooth) =>
+  document.getElementById(id)?.scrollIntoView({ behavior: smooth ? 'smooth' : 'auto', block: 'start' });
 
 export default function Nav() {
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState('top');
 
   useEffect(() => {
-    const onScroll = () => {
-      const mid = window.innerHeight * 0.5;
-      let cur = '';
-      for (const [id] of LINKS) {
+    let allow = false;
+
+    const current = () => {
+      const mid = window.innerHeight * 0.4;
+      let cur = 'top';
+      for (const id of IDS) {
         const el = document.getElementById(id);
         if (!el) continue;
         const r = el.getBoundingClientRect();
         if (r.top <= mid && r.bottom > mid) cur = id;
       }
-      setActive(cur);
+      return cur;
     };
-    onScroll();
+
+    const onScroll = () => {
+      const cur = current();
+      setActive(cur);
+      if (allow && window.location.pathname !== pathFor(cur)) window.history.replaceState(null, '', pathFor(cur));
+    };
+
+    // opened on /experiences etc.? jump there once the layout has settled
+    const first = idFromPath();
+    let t;
+    if (first !== 'top') {
+      t = setTimeout(() => {
+        scrollToId(first, false);
+        setActive(first);
+        setTimeout(() => { allow = true; }, 400);
+      }, 350);
+    } else {
+      allow = true;
+      onScroll();
+    }
+
+    const onPop = () => scrollToId(idFromPath(), false);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('popstate', onPop);
+    return () => {
+      clearTimeout(t);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('popstate', onPop);
+    };
   }, []);
+
+  const go = (e, id) => {
+    e.preventDefault();
+    window.history.pushState(null, '', pathFor(id));
+    scrollToId(id, true);
+  };
 
   return (
     <header className="nav-wrap">
-      <nav className="nav pill" aria-label="sections">
-        <a href="#top" className="nav-logo" aria-label="back to the start">nk.</a>
-        {LINKS.map(([id, label]) => (
-          <a key={id} href={`#${id}`} className={active === id ? 'active' : ''}>{label}</a>
+      <a href="/" className="nav-logo" onClick={(e) => go(e, 'top')} aria-label="back to the start">nk.</a>
+      <nav className="nav" aria-label="sections">
+        {LINKS.map((id) => (
+          <a key={id} href={pathFor(id)} onClick={(e) => go(e, id)} className={active === id ? 'active' : ''}>
+            {id}
+          </a>
         ))}
       </nav>
     </header>

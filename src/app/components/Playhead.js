@@ -3,7 +3,7 @@
 // A tiny "now playing" readout: scrolling is the playhead.
 import { useEffect, useState } from 'react';
 
-const NAMES = ['overture', 'liner notes', 'atlas', 'tracklist', 'studio', 'outro'];
+const NAMES = ['intro', 'about', 'experiences', 'projects', 'studio', 'contact'];
 const TOTAL = 4 * 60 + 12;
 
 const fmt = (s) => `${String(Math.floor(s / 60)).padStart(2, '0')}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
