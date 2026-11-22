@@ -1,80 +1,37 @@
-"use client"
+'use client';
 
-import './globals.css';
-import React from 'react';
-import { useRef } from "react";
-import { Button, Dialog, DialogContent, DialogContentText, DialogTitle, DialogActions } from '@mui/material';
-import WorkExperiencePage from './pages/work-experience';
-import AboutPage from './pages/about';
-import ProjectPage from './pages/projects';
+import { useRef } from 'react';
+import dynamic from 'next/dynamic';
+import Nav from './components/Nav';
+import Hero from './components/Hero';
+import About from './components/About';
+import Experience from './components/Experience';
+import Projects from './components/Projects';
+import Skills from './components/Skills';
+import Contact from './components/Contact';
+import HandControl from './components/HandControl';
 
-import Navbar from "./components/navigation-bar";
-import VariableProximity from './components/VariableProximity';
-import HandTracker from './components/HandTracker';
+// three.js is browser-only
+const WaveField = dynamic(() => import('./components/WaveField'), { ssr: false });
 
 export default function Home() {
-  const refs = {
-    about: useRef(null),
-    projects: useRef(null),
-    workExperience: useRef(null),
-  };
-
-  const [open, setOpen] = React.useState(true);
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const containerRef = useRef(null);
+  // shared, mutable hand-tracking state: written by HandControl, read every frame by WaveField
+  const control = useRef({ active: false, x: 0, y: 0, pinch: 0.5, roll: 0.8 });
 
   return (
     <>
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle className="dialogTitle">Smile! You're on Camera.</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            This website uses gestures for visualization control - move, twist, and stretch your hand to change the background. Toggle this 
-            option using the camera button on the top right corner of the site. Hover over the button to view the camera frame.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>
-            Got it
-          </Button>
-        </DialogActions>
-      </Dialog>
-
-      <div style={{ height: '100vh'}}>
-        <div style={{paddingTop:'7%'}}>
-          <h3>Hi, I'm</h3>
-          {/* <h1>Navya Khurana</h1> */}
-          <div
-          ref={containerRef}
-          style={{position: 'relative'}}
-          >
-            <VariableProximity
-              label={'Navya Khurana'}
-              className={'variable-proximity-demo'}
-              fromFontVariationSettings="'wght' 400, 'opsz' 9"
-              toFontVariationSettings="'wght' 1000, 'opsz' 40"
-              containerRef={containerRef}
-              radius={200}
-              falloff='exponential'
-            />
-          </div>
-          <h4>i mess around with data, ai, & whatever tech feels interesting (...and explore a lil design on the side).</h4>
-        </div>
-        <Navbar refs={refs} />
-      </div>
-      <div>
-        <div ref={refs.about} style={{ minHeight: '100vh', paddingTop: '5vh', paddingBottom: '5vh' }}><AboutPage /></div>
-        <div ref={refs.workExperience} style={{ minHeight: '100vh', paddingTop: '5vh', paddingBottom: '5vh' }}><WorkExperiencePage /></div>
-        <div ref={refs.projects} style={{ minHeight: '100vh', paddingTop: '5vh', paddingBottom: '5vh' }}><ProjectPage /></div>
-        <HandTracker />
-      </div>
+      <WaveField control={control} />
+      <div className="vignette" aria-hidden="true" />
+      <Nav />
+      <main>
+        <Hero />
+        <About />
+        <Experience />
+        <Projects />
+        <Skills />
+        <Contact />
+      </main>
+      <HandControl control={control} />
     </>
   );
 }
-
