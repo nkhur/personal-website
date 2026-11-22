@@ -3,18 +3,16 @@
 
 export const profile = {
   name: 'Navya Khurana',
-  words: ['data', 'ai', 'interaction', 'whatever’s interesting'],
-  tagline:
-    'i mess around with data, ai, and whatever tech feels interesting — and explore a little design on the side.',
-  lede: 'i like building tools that make life better, not just faster — and interfaces that make tech feel alive.',
+  tagline: 'recreational dev.',
+  lede: 'i’m a cs and math student at umd, graduating in december 2026.',
   notes: [
-    'i’m finishing a computer science degree (with a math minor) at umd in december 2026. lately that’s meant clinical decision-support research at uc davis health, a summer at visa, and ai agents on the side.',
-    "outside of code i'm usually deep in a playlist, swapping music recs with friends, or losing at mario kart.",
+    'i enjoy building projects, tinkering with new ideas, and keeping up with developments in cs and ai. i like reading papers and digging through codebases to understand how things work in practice. i’m drawn to technically ambiguous problems and enjoy working with people who are genuinely excited about what they’re building. outside of tech, i enjoy music, the gym, and finding new things to get into.',
+    'say hi!',
   ],
   credits: [
-    ['studying', 'computer science + math @ umd · dec 2026'],
     ['currently', 'research software engineer @ uc davis health'],
-    ['this summer', 'software engineer intern @ visa'],
+    ['previously', 'software engineer intern @ visa · summer 2026'],
+    ['interested in', 'software, ai, and research'],
   ],
   email: 'nkhurana@umd.edu',
   github: 'https://github.com/nkhur',
@@ -110,6 +108,7 @@ export const atlas = [
       'Pulled low-score pairs from Firebase, then generated embeddings and upserted them into Pinecone.',
       'Integrated a new Express REST API layer to support frontend workflows.',
     ],
+    link: { label: 'github', href: 'https://github.com/Hack4Impact-UMD/for-all-ages' },
     stack: ['Firebase', 'Express', 'Node.js', 'React', 'Pinecone'],
   },
   {
@@ -150,6 +149,7 @@ export const projects = [
     blurb:
       'An intelligent meeting and voice assistant that orchestrates meeting analysis, email drafting and calendar events across Google Workspace to give a personalized daily overview. An automated agenda-tracking and suggestion pipeline sits on a Neo4j knowledge graph of task dependencies and context.',
     stack: ['Electron.js', 'Python', 'Supabase', 'Neo4j', 'Render', 'ElevenLabs', 'Gemini'],
+    link: { label: 'devpost', href: 'https://devpost.com/software/remi-x2vb91' },
   },
   {
     title: 'Professor Rating Predictor',
@@ -199,12 +199,12 @@ export const projects = [
 // The studio: process, experiments, unfinished things.
 export const studio = [
   {
-    status: 'in progress',
+    status: 'ongoing',
     title: 'a first-author paper',
     text: 'writing up the bayesian hypertension benefit–risk model, trained and tested on SPRINT trial data (9,316 enrolled).',
   },
   {
-    status: 'in progress',
+    status: 'ongoing',
     title: 'from model to clinic',
     text: 'the epic-integrated decision-support tool has been confirmed by kaiser permanente, ucsf and ucsd for pilot evaluation.',
   },

@@ -2,7 +2,7 @@ import './globals.css';
 
 export const metadata = {
   title: 'navya khurana',
-  description: 'somewhere between algorithms and aesthetics — by navya khurana.',
+  description: 'navya khurana. recreational dev. cs and math at umd, graduating dec 2026.',
 };
 
 export default function RootLayout({ children }) {

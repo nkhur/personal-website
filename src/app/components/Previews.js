@@ -11,40 +11,76 @@ const D = ({ delay = 0, ...p }) => (
 const Dot = ({ delay = 0, ...p }) => <circle className="dot" style={{ animationDelay: `${delay}s` }} {...p} />;
 const T = (p) => <text className="pv-text" textAnchor="middle" {...p} />;
 
-// CodeCanvas: a repo drawn as a graph, grouped into clusters; the agent "sees" one region
+// CodeCanvas: the repo becomes a graph (Tree-sitter) grouped into clusters (Leiden), that graph is
+// rendered into a picture, and the agent reads the picture, with its own memory and MCP tools.
 function CodeMap() {
   const R = rng(21);
-  const centers = [[105, 100], [285, 85], [195, 205]];
+  const circle = (cx, cy, r) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
+  const arrow = (x1, y1, x2, y2) => {
+    const a = Math.atan2(y2 - y1, x2 - x1), h = 6;
+    const p = (ang) => `${(x2 - Math.cos(a + ang) * h).toFixed(1)} ${(y2 - Math.sin(a + ang) * h).toFixed(1)}`;
+    return `M${x1} ${y1}L${x2} ${y2}M${p(0.5)}L${x2} ${y2}L${p(-0.5)}`;
+  };
+
+  // 1. the code graph, grouped into three clusters
+  const centers = [[62, 92], [108, 172], [60, 240]];
   const nodes = [];
   const edges = [];
-  centers.forEach(([cx, cy], c) => {
-    const ids = [];
-    for (let i = 0; i < 8; i++) {
-      const a = R() * 6.283, r = 12 + R() * 50;
-      ids.push(nodes.length);
-      nodes.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r * 0.85, c]);
+  centers.forEach(([cx, cy]) => {
+    const first = nodes.length;
+    for (let i = 0; i < 6; i++) {
+      const a = (i / 6) * 6.283 + R() * 0.7, r = 10 + R() * 20;
+      nodes.push([cx + Math.cos(a) * r, cy + Math.sin(a) * r]);
     }
-    ids.forEach((i) => {
-      [...ids]
-        .filter((j) => j !== i)
-        .sort((a, b) => Math.hypot(nodes[a][0] - nodes[i][0], nodes[a][1] - nodes[i][1]) - Math.hypot(nodes[b][0] - nodes[i][0], nodes[b][1] - nodes[i][1]))
-        .slice(0, 2)
-        .forEach((j) => edges.push([i, j]));
-    });
+    for (let i = first; i < first + 6; i++) {
+      [...Array(6).keys()].map((k) => first + k).filter((j) => j !== i)
+        .sort((x, y) => Math.hypot(nodes[x][0] - nodes[i][0], nodes[x][1] - nodes[i][1]) - Math.hypot(nodes[y][0] - nodes[i][0], nodes[y][1] - nodes[i][1]))
+        .slice(0, 2).forEach((j) => { if (i < j) edges.push([i, j]); });
+    }
   });
-  [[0, 8], [10, 16], [3, 19], [14, 21]].forEach(([a, b]) => edges.push([a, b, true]));
+  const between = [[2, 8], [10, 14]];
+
   return (
     <>
       {centers.map(([cx, cy], c) => (
-        <path key={c} pathLength="1" className="d dashed" style={{ animationDelay: `${c * 0.2}s` }} d={`M${cx - 78} ${cy}a78 66 0 1 0 156 0a78 66 0 1 0 -156 0`} />
+        <path key={c} pathLength="1" className="d dashed" style={{ animationDelay: `${c * 0.15}s` }} d={circle(cx, cy, 40)} />
       ))}
-      {edges.map(([a, b, far], i) => (
-        <D key={i} d={`M${nodes[a][0]} ${nodes[a][1]}L${nodes[b][0]} ${nodes[b][1]}`} delay={0.3 + i * 0.015} className={far ? 'd faint-line' : 'd'} />
+      {edges.map(([a, b], i) => <D key={i} d={`M${nodes[a][0]} ${nodes[a][1]}L${nodes[b][0]} ${nodes[b][1]}`} delay={0.25 + i * 0.02} />)}
+      {between.map(([a, b], i) => <D key={`b${i}`} className="d faint-line" d={`M${nodes[a][0]} ${nodes[a][1]}L${nodes[b][0]} ${nodes[b][1]}`} delay={0.6} />)}
+      {nodes.map(([x, y], i) => <Dot key={i} cx={x} cy={y} r="3" delay={0.3 + i * 0.02} />)}
+      <T x="82" y="294">code graph + clusters</T>
+
+      {/* 2. rendered into a picture */}
+      <D d={arrow(154, 130, 194, 130)} delay={0.9} />
+      <T x="171" y="120">render</T>
+      <D d="M200 58h116v104h-116z" delay={1.0} className="d thick" />
+      {[[236, 90, 15], [284, 104, 12], [250, 134, 14]].map(([cx, cy, r], i) => (
+        <path key={i} pathLength="1" className="d dashed" style={{ animationDelay: `${1.1 + i * 0.1}s` }} d={circle(cx, cy, r)} />
       ))}
-      {nodes.map(([x, y], i) => <Dot key={i} cx={x} cy={y} r="3" delay={0.4 + i * 0.02} />)}
-      <path pathLength="1" className="d thick" style={{ animationDelay: '1.2s' }} d="M212 36h160v100h-160z" />
-      <T x="292" y="156">what the agent sees</T>
-      <T x="195" y="282">leiden clusters</T>
+      {[[236, 90], [284, 104], [250, 134], [229, 84], [243, 97], [280, 100], [290, 108], [245, 130], [256, 139]].map(([x, y], i) => (
+        <Dot key={i} cx={x} cy={y} r="2.2" delay={1.2 + i * 0.03} />
+      ))}
+      <D d="M236 90L284 104M236 90L250 134" className="d faint-line" delay={1.3} />
+      <T x="258" y="180">rendered codemap</T>
+
+      {/* 3. the agent looks at it, with memory and tools */}
+      <D d={arrow(258, 188, 258, 214)} delay={1.5} />
+      <D d="M216 218h84v54h-84z" delay={1.6} />
+      <Dot cx="240" cy="240" r="4" delay={1.8} />
+      <Dot cx="276" cy="240" r="4" delay={1.8} />
+      <D d="M240 257h36" delay={1.8} />
+      <D d="M258 218v-9" delay={1.8} />
+      <Dot cx="258" cy="206" r="3" delay={1.9} />
+      <T x="258" y="290">agent</T>
+
+      <D d="M350 222a20 7 0 1 0 40 0a20 7 0 1 0 -40 0M350 222v36M390 222v36M350 258a20 7 0 0 0 40 0" delay={1.7} />
+      <D d={arrow(348, 244, 304, 244)} delay={1.9} />
+      <T x="370" y="285">memory</T>
+
+      <D d="M338 62h52v34h-52z" delay={1.7} />
+      <D d="M348 74h32M348 84h22" delay={1.9} className="d faint-line" />
+      <D d={arrow(304, 226, 336, 100)} delay={2.0} className="d faint-line" />
+      <T x="366" y="118">mcp tools</T>
     </>
   );
 }

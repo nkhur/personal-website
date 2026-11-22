@@ -19,7 +19,7 @@ export default function Playhead() {
       let name = NAMES[0];
       document.querySelectorAll('[data-palette]').forEach((el) => {
         const r = el.getBoundingClientRect();
-        if (r.top <= mid && r.bottom > mid) name = el.id === 'top' ? 'intro' : el.id || name;
+        if (r.top <= mid && r.bottom > mid) name = el.id === 'top' ? 'intro' : (el.id || name).replace('-', ' ');
       });
       setState({ t: frac * TOTAL, name });
     };

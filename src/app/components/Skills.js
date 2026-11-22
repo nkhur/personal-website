@@ -10,7 +10,8 @@ export default function Skills() {
   return (
     <section id="skills" className="section" data-palette="1">
       <Reveal><p className="label">02 — skills</p></Reveal>
-      <Reveal as="h2" className="h2">skills</Reveal>
+      <Reveal as="h2" className="h2 has-sub">skills</Reveal>
+      <Reveal as="p" className="subhead">instrumentation</Reveal>
 
       <Reveal className="filters">
         {[{ id: 'all', label: 'all' }, ...skillGroups].map((g) => (

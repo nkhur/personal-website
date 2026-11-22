@@ -346,18 +346,12 @@ export default function Atmosphere({ control }) {
       ctx.strokeStyle = pg; ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(phX, top - gap * 2); ctx.lineTo(phX, top + (TOP_STEP * gap) / 2 + gap * 2); ctx.stroke();
 
-      // soft light under the pointer; with a tracked hand, a clear ring so you can see it working
+      // a soft light under the pointer (or your hand), with no cursor drawn on top
       if (light > 0.01) {
         const lx = (px * 0.5 + 0.5) * W, ly = (py * 0.5 + 0.5) * H;
         const g3 = ctx.createRadialGradient(lx, ly, 0, lx, ly, 240);
-        g3.addColorStop(0, rgb(accent, 0.06 * light + 0.1 * handMix)); g3.addColorStop(1, rgb(accent, 0));
+        g3.addColorStop(0, rgb(accent, 0.06 * light)); g3.addColorStop(1, rgb(accent, 0));
         ctx.fillStyle = g3; ctx.fillRect(0, 0, W, H);
-        if (handMix > 0.02) {
-          ctx.strokeStyle = rgb(accent, 0.7 * handMix); ctx.lineWidth = 1.5;
-          ctx.beginPath(); ctx.arc(lx, ly, 14 + (1 - clamp(c?.pinch ?? 0.5, 0, 1)) * 10, 0, Math.PI * 2); ctx.stroke();
-          ctx.fillStyle = rgb([255, 255, 255], 0.8 * handMix);
-          ctx.beginPath(); ctx.arc(lx, ly, 2.5, 0, Math.PI * 2); ctx.fill();
-        }
       }
     };
     raf = requestAnimationFrame(frame);

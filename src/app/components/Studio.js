@@ -5,11 +5,10 @@ import { studio } from '../data';
 
 export default function Studio() {
   return (
-    <section id="studio" className="section" data-palette="4">
-      <Reveal><p className="label">05 — studio</p></Reveal>
-      <Reveal as="h2" className="h2">
-        demo tapes
-      </Reveal>
+    <section id="in-progress" className="section" data-palette="4">
+      <Reveal><p className="label">05 — in progress</p></Reveal>
+      <Reveal as="h2" className="h2 has-sub">in progress</Reveal>
+      <Reveal as="p" className="subhead">demo tapes</Reveal>
       <div className="bench">
         {studio.map((s, i) => (
           <Reveal key={s.title} delay={i * 0.08} className="bench-item">

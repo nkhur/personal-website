@@ -1,14 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { profile } from '../data';
 
-// Overture: oversized name, letters that lean toward the pointer,
-// and a line that crossfades through what i'm into.
+// Overture: an oversized name whose letters lean toward the pointer, and one line about me.
 export default function Hero() {
   const nameRef = useRef(null);
-  const [wi, setWi] = useState(0);
 
   useEffect(() => {
     const letters = [...nameRef.current.querySelectorAll('.ch')];
@@ -28,11 +25,6 @@ export default function Hero() {
     };
   }, []);
 
-  useEffect(() => {
-    const id = setInterval(() => setWi((i) => (i + 1) % profile.words.length), 2600);
-    return () => clearInterval(id);
-  }, []);
-
   return (
     <section id="top" className="hero" data-palette="0">
       <div className="hero-meta label">
@@ -48,22 +40,6 @@ export default function Hero() {
         ))}
       </h1>
 
-      <p className="hero-line">
-        <span className="label">currently into</span>
-        <span className="hero-word">
-          <AnimatePresence mode="wait">
-            <motion.em
-              key={wi}
-              initial={{ opacity: 0, y: 12, filter: 'blur(6px)' }}
-              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-              exit={{ opacity: 0, y: -12, filter: 'blur(6px)' }}
-              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            >
-              {profile.words[wi]}
-            </motion.em>
-          </AnimatePresence>
-        </span>
-      </p>
       <p className="hero-tag">{profile.tagline}</p>
 
       <a href="#about" className="scroll-cue label">scroll <span aria-hidden="true">↓</span></a>

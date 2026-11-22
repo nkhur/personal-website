@@ -6,9 +6,10 @@
 //    left (Turn 1), newest at the far right (Spoon). numbered badges and small arrows show the order.
 //  - the big serif name below follows the selected star
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Reveal from './Reveal';
+import IconLink from './IconLink';
 import { atlas, atlasStart } from '../data';
 import { buildArt, buildSky, buildProps, buildTrack, MAP_W as W, MAP_H as H } from '../atlasArt';
 
@@ -28,6 +29,15 @@ export default function Atlas() {
     return { track, P, art, sky: buildSky(), props: buildProps(track.car) };
   }, []);
 
+  // on narrow screens the map scrolls sideways: keep the selected stop in view
+  const scrollRef = useRef(null);
+  useEffect(() => {
+    const sc = scrollRef.current;
+    if (!sc || sc.scrollWidth <= sc.clientWidth + 4) return;
+    const x = (geo.P[active][0] / W) * sc.scrollWidth;
+    sc.scrollTo({ left: x - sc.clientWidth / 2, behavior: 'smooth' });
+  }, [active, geo]);
+
   const node = atlas[active];
 
   const go = (d) => {
@@ -43,16 +53,15 @@ export default function Atlas() {
     <section id="experiences" className="atlas" data-palette="2" style={{ '--nc': node.color }}>
       <div className="atlas-head section">
         <Reveal><p className="label">03 — experiences</p></Reveal>
-        <Reveal as="h2" className="h2">
-          the world tour
-        </Reveal>
+        <Reveal as="h2" className="h2 has-sub">experiences</Reveal>
+        <Reveal as="p" className="subhead">the world tour</Reveal>
         <Reveal className="atlas-hint">
           <span className="hint-pill"><span className="hint-dot" />{touched ? 'use ← → or click another star' : 'click a star to open it'}</span>
           <span className="label">set on the suzuka circuit, japan</span>
         </Reveal>
       </div>
 
-      <div className="atlas-scroll">
+      <div className="atlas-scroll" ref={scrollRef}>
         <motion.div
           className="atlas-stage"
           tabIndex={0}
@@ -197,6 +206,7 @@ export default function Atlas() {
             transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
           >
             {node.title}
+            {node.link && <IconLink href={node.link.href} label={node.link.label} />}
           </motion.h3>
         </AnimatePresence>
 
@@ -213,9 +223,6 @@ export default function Atlas() {
               <p className="label">{node.when}</p>
               <p className="role">{node.role}</p>
               <p className="blurb">{node.blurb}</p>
-              {node.link && (
-                <a className="pill" href={node.link.href} target="_blank" rel="noreferrer">{node.link.label} ↗</a>
-              )}
             </div>
             <div>
               {node.highlight && (

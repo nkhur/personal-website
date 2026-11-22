@@ -6,7 +6,7 @@
 
 import { useEffect, useState } from 'react';
 
-const LINKS = ['about', 'skills', 'experiences', 'projects', 'studio'];
+const LINKS = ['about', 'skills', 'experiences', 'projects', 'in-progress'];
 const IDS = ['top', ...LINKS];
 const pathFor = (id) => (id === 'top' ? '/' : `/${id}`);
 const idFromPath = () => {
@@ -76,7 +76,7 @@ export default function Nav() {
       <nav className="nav" aria-label="sections">
         {LINKS.map((id) => (
           <a key={id} href={pathFor(id)} onClick={(e) => go(e, id)} className={active === id ? 'active' : ''}>
-            {id}
+            {id.replace('-', ' ')}
           </a>
         ))}
       </nav>
