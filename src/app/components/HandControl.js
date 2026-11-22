@@ -14,9 +14,9 @@ const dist = (a, b) => Math.hypot(a.x - b.x, a.y - b.y);
 const ease = (prev, next, a = 0.25) => prev + (next - prev) * a;
 
 const HINTS = [
-  'point with your index finger to make ripples',
-  'pinch and spread your fingers to change the wave height',
-  'tilt your hand to turn the waves',
+  'move your index finger — the light follows it',
+  'pinch and spread to speed up the drift',
+  'tilt your hand to change its direction',
 ];
 
 export default function HandControl({ control }) {
@@ -43,6 +43,14 @@ export default function HandControl({ control }) {
     cancelAnimationFrame(rafRef.current);
     streamRef.current?.getTracks().forEach((t) => t.stop());
     landmarkerRef.current?.close?.();
+  }, []);
+
+  // the studio section can ask us to toggle (event keeps the components decoupled)
+  const toggleRef = useRef(() => {});
+  useEffect(() => {
+    const h = () => toggleRef.current();
+    window.addEventListener('nk:hand', h);
+    return () => window.removeEventListener('nk:hand', h);
   }, []);
 
   // cycle through hints while on
@@ -139,6 +147,11 @@ export default function HandControl({ control }) {
   };
 
   const on = status === 'on';
+  toggleRef.current = () => {
+    if (status === 'loading') return;
+    if (on) stop();
+    else start();
+  };
 
   return (
     <div className="hand">
@@ -169,7 +182,7 @@ export default function HandControl({ control }) {
       >
         <span className="hand-dot" />
         {status === 'loading' && 'waking up the camera…'}
-        {status === 'off' && 'play with it — use your hand'}
+        {status === 'off' && 'steer with your hand'}
         {status === 'on' && 'hand tracking on'}
         {status === 'error' && 'camera unavailable — retry'}
       </button>
