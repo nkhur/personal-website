@@ -259,32 +259,6 @@ function Interview() {
   );
 }
 
-// CrossSense: three senses feed one attention-fusion model
-function Fusion() {
-  const circle = (cx, cy, r) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
-  return (
-    <>
-      <D d="M26 70q24 -22 48 0q-24 22 -48 0" />
-      <Dot cx="50" cy="70" r="6" delay={0.3} />
-      <T x="50" y="108">vision</T>
-      {[34, 42, 50, 58, 66].map((x, i) => <D key={x} d={`M${x} ${158 - (i % 3 + 1) * 7}v${(i % 3 + 1) * 14}`} delay={0.3 + i * 0.05} />)}
-      <T x="50" y="198">audio</T>
-      <D d={circle(50, 238, 9)} delay={0.4} />
-      <D d="M32 238a18 18 0 0 1 36 0M24 238a26 26 0 0 1 52 0" delay={0.5} className="d faint-line" />
-      <T x="50" y="282">touch</T>
-      {[[78, 70], [78, 150], [78, 238]].map(([x, y], i) => <D key={i} d={`M${x} ${y}L186 ${150 + (y - 150) * 0.35}`} delay={0.8 + i * 0.1} className="d faint-line" />)}
-      <path pathLength="1" className="d thick" style={{ animationDelay: '1.1s' }} d={circle(220, 150, 38)} />
-      {[[205, 135], [238, 140], [215, 168], [236, 166]].map(([x, y], i) => <Dot key={i} cx={x} cy={y} r="3.2" delay={1.3 + i * 0.05} />)}
-      <D d="M205 135L238 140M205 135L215 168M238 140L236 166M215 168L236 166M205 135L236 166" delay={1.5} className="d faint-line" />
-      <T x="220" y="212">attention fusion</T>
-      <D d="M262 150h56" delay={1.7} />
-      <D d="M312 144l6 6l-6 6" delay={1.8} />
-      <D d="M326 128h44v44h-44z" delay={1.9} />
-      <T x="348" y="192">prediction</T>
-    </>
-  );
-}
-
 // Garbage Collectors in Rust: roots point at live heap cells, the rest is swept
 function Heap() {
   const live = new Set([2, 5, 6, 9, 11, 14, 17]);
@@ -367,7 +341,7 @@ function Forecast() {
   );
 }
 
-const KINDS = { interview: Interview, fusion: Fusion, heap: Heap, curate: Curate, forecast: Forecast,  codemap: CodeMap, agenda: Agenda, scatter: Scatter, tree: Tree, pipes: Pipes, maze: Maze, map: MapDots };
+const KINDS = { interview: Interview, heap: Heap, curate: Curate, forecast: Forecast,  codemap: CodeMap, agenda: Agenda, scatter: Scatter, tree: Tree, pipes: Pipes, maze: Maze, map: MapDots };
 
 export default function Preview({ kind }) {
   const Comp = KINDS[kind] || CodeMap;

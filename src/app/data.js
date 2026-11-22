@@ -170,23 +170,15 @@ export const projects = [
     blurb:
       'Built at Gemini Hack Night: a production-ready MVP in under 8 hours, with real-time transcription, performance and bias scoring, an HR analytics dashboard and a meeting platform. Whisper and Gemini analyze video, audio and transcript together, and AI-assisted rapid prototyping kept iteration fast.',
     stack: ['Python', 'Next.js', 'Flask', 'Render', 'Whisper', 'Gemini'],
-  },
-  {
-    title: 'CrossSense',
-    sub: 'multimodal vision transformer: vision, sound + touch',
-    year: 'Nov 2025',
-    kind: 'fusion',
-    blurb:
-      'Designed and trained a multimodal Vision Transformer from scratch on the ObjectFolder dataset (vision + audio + tactile), covering data ingestion, early/late fusion and serving: 83% accuracy, +18% over baselines. Attention-based fusion reached 94%, +12% over late fusion, with interpretable cross-modal attention maps.',
-    stack: ['PyTorch', 'Python'],
+    link: { label: 'devpost', href: 'https://devpost.com/software/trueview-26g784' },
   },
   {
     title: 'Aestoria',
     sub: 'personalized ml image curation',
-    year: 'Aug 2025 — present',
+    year: 'Aug 2025 — paused',
     kind: 'curate',
     blurb:
-      'Building a CLIP-based pipeline that embeds a user’s style from Instagram and Pinterest by vibe and quality, then sequences photos with learned aesthetic transitions and graph search.',
+      'A CLIP-based pipeline that embeds a user’s style from Instagram and Pinterest by vibe and quality, then sequences photos with learned aesthetic transitions and graph search.',
     stack: ['PyTorch', 'Next.js', 'MongoDB'],
   },
   {
