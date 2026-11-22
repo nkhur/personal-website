@@ -14,7 +14,7 @@ export const profile = {
     ['previously', 'software engineer intern @ visa · summer 2026'],
     ['interested in', 'software, ai, and research'],
   ],
-  email: 'nkhurana@umd.edu',
+  email: 'nknavyakhurana@gmail.com',
   github: 'https://github.com/nkhur',
   linkedin: 'https://linkedin.com/in/navya-khurana',
   resume: '/resume.pdf',
