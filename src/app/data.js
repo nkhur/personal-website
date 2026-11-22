@@ -34,14 +34,11 @@ export const atlas = [
     art: { kind: 'neural', dx: 192, dy: -20 },
     blurb: 'Built the software behind a closed-loop brain-stimulation rig for Parkinson’s research: live recording, stimulation and visualization across 32 channels.',
     points: [
-      'Python control system covering recording, stimulation and visualization.',
-      'Worked with Professor Sahil Shah (ECE) at UMD toward future clinical experiments for the lab.',
-      'Custom Python GUI that decodes and displays neural signals to and from the Intan RHS 2000 board, streamed as binary into OpenEphys for real-time visualization, with user-defined alerts for matching patterns.',
-      'Live stimulation: triggers outputs based on incoming signal characteristics, for immediate response in closed-loop experiments.',
-      'SPI command interpreters that generate .coe files for loading experimental stimulation patterns onto the FPGA, enabling further research in the lab.',
-      'Supported researchers with custom firmware patches and documentation for smooth lab adoption.',
+      'Python control system for recording, stimulation and visualization, with a custom GUI that streams the Intan RHS 2000 board into OpenEphys.',
+      'Live, signal-triggered stimulation for closed-loop experiments.',
+      'SPI-driven FPGA pattern loading, enabling further research in the lab.',
     ],
-    stack: ['Python', 'SPI', 'FPGA', 'OpenEphys'],
+    stack: ['Python', 'SPI', 'FPGA'],
   },
   {
     id: 'passionfruit',
@@ -54,13 +51,10 @@ export const atlas = [
     art: { kind: 'seo', dx: 192, dy: -20 },
     blurb: 'Shipped two ML features at an SEO startup: a chatbot that lifted client CTR and time on page 15–20%, and a scorer that cut manual SEO review by 20+ hours.',
     points: [
-      'Owned and built client-facing full-stack ML and NLP tools in Python, Node.js and Next.js. Learned on the job and shipped in a fast-paced startup.',
       'Chatbot: linear regression over 18 months of MongoDB campaign data found which actions moved results, and an LLM recommended how to repeat them with each client’s current metrics.',
       'Scorer: rates how on-topic a client’s content is, using YAKE + BERT keywords, embedding cosine similarity and LLM evaluation.',
-      'Content ideas generator: scraped Google’s “People Also Ask” questions and the structure of top-ranking blogs (word count, hyperlink density, image use) to auto-generate LLM prompts for content ideation.',
-      'Content editor: live keyword scoring, autosave and GPT rewrite suggestions to improve on-page SEO.',
     ],
-    stack: ['Python', 'Node.js', 'Next.js', 'MongoDB', 'BERT', 'YAKE', 'OpenAI'],
+    stack: ['MongoDB', 'Python', 'BERT', 'YAKE', 'LLMs'],
   },
   {
     id: 'del',
@@ -74,11 +68,10 @@ export const atlas = [
     blurb: 'Built the pipelines and PyTorch classifiers that measured how well 1000+ YouTube videos matched viewer reactions across 1M+ comments.',
     points: [
       'Built data ingestion and transformation pipelines to quantify viewer–content alignment and surface engagement patterns.',
-      'Analyzed millions of comments with PyTorch classifiers to build a “viewer–content alignment” metric for videos, pulling structured metadata and comments from the YouTube Data API and adding HuggingFace emotion and semantic models for comments, titles and transcripts.',
-      'New View News: the lab’s scannable AI news platform for instant high-level insights. Built core features, added PostHog (cursor heatmaps, click frequency, session replays) for event-level UX research, and integrated the open-source news-story-viz tool for narrative visual summaries.',
+      'New View News: the lab’s AI news platform. Built core features and added PostHog analytics (heatmaps, session replays) for UX research.',
     ],
     link: { label: 'new view news', href: 'https://smart-story-agent.vercel.app/' },
-    stack: ['Python', 'PyTorch', 'HuggingFace', 'Next.js', 'PostHog'],
+    stack: ['Python', 'PyTorch', 'YouTube data', 'Next.js', 'PostHog'],
   },
   {
     id: 'ucdavis',
@@ -97,12 +90,11 @@ export const atlas = [
       text: 'In progress: I’m leading the manuscript on the Bayesian benefit–risk model behind the tool.',
     },
     points: [
-      'React.js clinical decision-support tool integrated with the Epic EHR (SMART on FHIR), modeling benefit–risk tradeoffs with Bayesian analysis.',
-      'Interactive charts (Chart.js) that help clinicians and patients visualize the tradeoffs and make decisions.',
+      'React.js clinical decision-support tool integrated with the Epic EHR, modeling benefit–risk tradeoffs with Bayesian analysis.',
       'Formalized the Bayesian risk model in R, trained and tested on SPRINT trial data (9,316 enrolled).',
       'Working directly with Dr. Simon Benjamin Ascher.',
     ],
-    stack: ['React', 'TypeScript', 'Next.js', 'Chart.js', 'Epic EHR', 'SMART on FHIR', 'R', 'Bayesian analysis'],
+    stack: ['React', 'Epic EHR', 'R', 'Bayesian analysis'],
   },
   {
     id: 'h4i',
@@ -117,7 +109,6 @@ export const atlas = [
     points: [
       'Pulled low-score pairs from Firebase, then generated embeddings and upserted them into Pinecone.',
       'Integrated a new Express REST API layer to support frontend workflows.',
-      'Collaborated with a cross-functional team and Microsoft mentors in an agile SDLC environment.',
     ],
     link: { label: 'github', href: 'https://github.com/Hack4Impact-UMD/for-all-ages' },
     stack: ['Firebase', 'Express', 'Node.js', 'React', 'Pinecone'],
