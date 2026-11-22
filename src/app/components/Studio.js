@@ -6,9 +6,9 @@ import { studio } from '../data';
 export default function Studio() {
   return (
     <section id="studio" className="section" data-palette="4">
-      <Reveal><p className="label">04 — studio</p></Reveal>
+      <Reveal><p className="label">05 — studio</p></Reveal>
       <Reveal as="h2" className="h2">
-        the bench<span className="dim">, unfinished on purpose</span>
+        demo tapes
       </Reveal>
       <div className="bench">
         {studio.map((s, i) => (

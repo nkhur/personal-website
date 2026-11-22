@@ -6,6 +6,7 @@
 // A scene returns { paths, dashed, dots: [x,y,r], ellipses: [], texts: [x,y,str] }
 
 import { rng } from './rng';
+import { CIRCUIT, CIRCUIT_STOPS } from './circuitTrack';
 
 const r1 = (n) => Math.round(n * 10) / 10;
 const rad = (d) => (d * Math.PI) / 180;
@@ -230,11 +231,6 @@ function health(R) {
   g.text(35, 168, 'risk');
   // a cross, and the record it lives in
   g.poly([[150, 98], [162, 98], [162, 110], [174, 110], [174, 122], [162, 122], [162, 134], [150, 134], [150, 122], [138, 122], [138, 110], [150, 110]], true);
-  // the manuscript
-  g.poly([[-215, 86], [-180, 86], [-167, 99], [-167, 150], [-215, 150]], true);
-  g.poly([[-180, 86], [-180, 99], [-167, 99]]);
-  for (let i = 0; i < 4; i++) g.line(-206, 108 + i * 10, -176 + R() * 6, 108 + i * 10);
-  g.text(-191, 168, 'paper');
   g.text(158, 158, 'Epic EHR');
   g.text(158, 176, 'SPRINT · 9,316');
   for (let i = 0; i < 6; i++) g.dot(-210 + R() * 420, -140 + R() * 30, 1.8 + R() * 2);
@@ -336,11 +332,11 @@ export function buildArt(kind, seed) {
 // scattered white stars, with a few little constellations
 export function buildSky() {
   const R = rng(99);
-  const stars = Array.from({ length: 95 }, () => [
+  const stars = Array.from({ length: 28 }, () => [
     r1(R() * MAP_W), r1(R() * MAP_H), r1(1.4 + Math.pow(R(), 3) * 7),
   ]);
   const lines = [];
-  for (let k = 0; k < 14; k++) {
+  for (let k = 0; k < 0; k++) {
     const a = stars[Math.floor(R() * stars.length)];
     let best = null, bd = 1e9;
     for (const b of stars) {
@@ -352,42 +348,99 @@ export function buildSky() {
   return { stars, lines };
 }
 
-// free-form "terrain" that fills the gaps between stars: contour blobs, a spiral,
-// an orbit and a patch of hatching. Purely decorative, and it connects nothing.
-export function buildFlourishes() {
-  const R = rng(5);
-  const blob = (cx, cy, r, rings = 3) =>
-    Array.from({ length: rings }, (_, k) => {
-      const ph = R() * 6, ps = R() * 6, kk = 1 - k * 0.28;
-      let d = '';
-      for (let i = 0; i <= 64; i++) {
-        const a = (i / 64) * 6.283;
-        const rr = r * kk * (1 + 0.25 * Math.sin(3 * a + ph) + 0.12 * Math.sin(7 * a + ps));
-        d += `${i ? 'L' : 'M'}${r1(cx + Math.cos(a) * rr * 1.25)} ${r1(cy + Math.sin(a) * rr * 0.85)}`;
-      }
-      return d + 'Z';
-    });
-  const spiral = (cx, cy, r) => {
-    let d = '';
-    for (let i = 0; i <= 90; i++) {
-      const t = (i / 90) * 4 * Math.PI;
-      const rr = (t / (4 * Math.PI)) * r;
-      d += `${i ? 'L' : 'M'}${r1(cx + Math.cos(t) * rr + (R() - 0.5))} ${r1(cy + Math.sin(t) * rr * 0.8 + (R() - 0.5))}`;
-    }
+// ------------------------------------------------------------- the F1 car
+// drawn facing left with its speed lines trailing behind; the atlas mirrors it to face the way the lap runs
+
+function f1car(R) {
+  const g = pen(R);
+  g.poly([[-112, 18], [-102, 6], [-42, 0], [-14, -8]]);
+  g.poly([[-14, -8], [-6, -22], [18, -24], [30, -10]]);
+  g.poly([[30, -10], [70, -2], [94, 0]]);
+  g.line(-112, 18, -84, 20);
+  g.line(-44, 20, 36, 20);
+  g.line(80, 20, 96, 12);
+  g.line(96, 12, 94, 0);
+  g.rect(86, -34, 22, 5); // rear wing
+  g.line(97, -29, 95, 0);
+  g.line(-124, 24, -96, 24); // front wing
+  g.line(-124, 16, -124, 24);
+  g.circle(-72, 18, 15);
+  g.circle(-72, 18, 6);
+  g.circle(62, 16, 18);
+  g.circle(62, 16, 7);
+  g.text(-10, -50, 'pole position');
+  return g.S;
+}
+
+export function buildProps(car) {
+  return [{ kind: 'f1car', ...car, s: 0.6, ...f1car(rng(32)) }];
+}
+
+// -------------------------------------------------------------- the circuit
+// Suzuka, the figure-eight, from survey data (see circuitTrack.js). Turned a half turn, the lap's
+// first half runs left to right: Turn 1, the Esses, Dunlop, Degner, the hairpin and Spoon. The
+// stops sit on that stretch in time order, the first job at the far left and the last at the far right.
+
+export function buildTrack() {
+  const N = CIRCUIT.length;
+  const P = (i) => CIRCUIT[((i % N) + N) % N];
+  const span = (k) => {
+    const p0 = P(k - 1), p1 = P(k), p2 = P(k + 1), p3 = P(k + 2);
+    const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+    const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+    return `C${r1(c1[0])} ${r1(c1[1])} ${r1(c2[0])} ${r1(c2[1])} ${r1(p2[0])} ${r1(p2[1])}`;
+  };
+  const run = (a, b) => {
+    let d = `M${r1(P(a)[0])} ${r1(P(a)[1])}`;
+    let k = a;
+    do { d += span(k); k = (k + 1) % N; } while (k !== b);
     return d;
   };
-  const hatch = (cx, cy, n, len, ang) => {
-    const dx = Math.cos(ang), dy = Math.sin(ang);
-    return Array.from({ length: n }, (_, i) => {
-      const ox = -dy * 5 * i, oy = dx * 5 * i, l = len + (R() - 0.5) * 14;
-      return `M${r1(cx + ox)} ${r1(cy + oy)}L${r1(cx + ox + dx * l)} ${r1(cy + oy + dy * l)}`;
-    });
+  let full = `M${r1(P(0)[0])} ${r1(P(0)[1])}`;
+  for (let k = 0; k < N; k++) full += span(k);
+
+  const cx = CIRCUIT.reduce((a, p) => a + p[0], 0) / N;
+  const cy = CIRCUIT.reduce((a, p) => a + p[1], 0) / N;
+  const out = (i, dist) => {
+    const [x, y] = P(i);
+    const dx = x - cx, dy = y - cy, l = Math.hypot(dx, dy) || 1;
+    return [r1(x + (dx / l) * dist), r1(y + (dy / l) * dist)];
   };
-  const paths = [
-    ...blob(640, 110, 56), ...blob(130, 420, 48, 2), ...blob(1010, 880, 44),
-    spiral(1420, 640, 52), spiral(330, 560, 0.001 + 0) && '',
-    ...hatch(700, 850, 10, 60, 0.7), ...hatch(330, 880, 9, 60, -0.5),
-  ].filter(Boolean);
-  const orbits = [[520, 900, 90, 24, -20], [1390, 140, 54, 16, 25]];
-  return { paths, orbits };
+  const heading = (i, j) => (Math.atan2(P(j)[1] - P(i)[1], P(j)[0] - P(i)[0]) * 180) / Math.PI;
+
+  // the start/finish line: a small chequered strip across the track (drawn at the origin, then placed)
+  const c = 6;
+  const check = [];
+  for (let col = 0; col < 2; col++) {
+    for (let row = 0; row < 4; row++) {
+      if ((row + col) % 2 === 0) check.push(`M${-c + col * c} ${-2 * c + row * c}h${c}v${c}h${-c}z`);
+    }
+  }
+
+  // small arrows along the racing line between the stops: this is the way time runs
+  const chevrons = [];
+  for (let leg = 0; leg < CIRCUIT_STOPS.length - 1; leg++) {
+    const a = CIRCUIT_STOPS[leg], b = CIRCUIT_STOPS[leg + 1];
+    for (const f of [0.34, 0.68]) {
+      const k = Math.round(a + (b - a) * f);
+      chevrons.push({ x: r1(P(k)[0]), y: r1(P(k)[1]), angle: r1(heading(k, k + 1)), leg });
+    }
+  }
+
+  // the car, just outside the track as it runs up to the last stop
+  const ca = CIRCUIT_STOPS[CIRCUIT_STOPS.length - 1] - 7, cb = ca + 3;
+  const mx = (P(ca)[0] + P(cb)[0]) / 2, my = (P(ca)[1] + P(cb)[1]) / 2;
+  const od = Math.hypot(mx - cx, my - cy) || 1;
+  const [carX, carY] = [r1(mx + ((mx - cx) / od) * 40), r1(my + ((my - cy) / od) * 40)];
+
+  const last = CIRCUIT_STOPS.length - 1;
+  return {
+    full: full + 'Z',
+    legs: CIRCUIT_STOPS.slice(0, last).map((a, i) => run(a, CIRCUIT_STOPS[i + 1])), // one stretch per step in time
+    rest: run(CIRCUIT_STOPS[last], CIRCUIT_STOPS[0]), // the way back round to Turn 1
+    chevrons,
+    nodes: CIRCUIT_STOPS.map((i) => [P(i)[0], P(i)[1]]),
+    start: { x: P(0)[0], y: P(0)[1], angle: heading(0, 1), check },
+    car: { x: carX, y: carY, angle: heading(ca, cb) },
+  };
 }

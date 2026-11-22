@@ -12,9 +12,9 @@ export default function Tracklist() {
 
   return (
     <section id="projects" className="section" data-palette="3">
-      <Reveal><p className="label">03 — projects</p></Reveal>
+      <Reveal><p className="label">04 — projects</p></Reveal>
       <Reveal as="h2" className="h2">
-        things i’ve made<span className="dim">, newest first</span>
+        the discography
       </Reveal>
 
       <div className="tl">

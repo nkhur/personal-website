@@ -2,48 +2,38 @@
 
 // The atlas: a full-bleed star map of experiences.
 //  - each experience is a glowing coloured star with its own line-art "landmass"
-//  - stars run left to right in time; the dotted line is the timeline
+//  - the stops sit on the real Suzuka circuit, in time order along the racing line: oldest at the far
+//    left (Turn 1), newest at the far right (Spoon). numbered badges and small arrows show the order.
 //  - the big serif name below follows the selected star
 
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Reveal from './Reveal';
 import { atlas, atlasStart } from '../data';
-import { buildArt, buildSky, buildFlourishes, MAP_W as W, MAP_H as H } from '../atlasArt';
+import { buildArt, buildSky, buildProps, buildTrack, MAP_W as W, MAP_H as H } from '../atlasArt';
 
 const f = (n) => Math.round(n * 10) / 10;
-const px = (n) => [(n.pos[0] * W) / 100, (n.pos[1] * H) / 100];
 
 export default function Atlas() {
   const [active, setActive] = useState(atlasStart);
+  const [touched, setTouched] = useState(false); // has the visitor picked a stop yet?
 
   const geo = useMemo(() => {
-    const P = atlas.map(px);
+    const track = buildTrack();
+    const P = track.nodes;
     const art = atlas.map((n, i) => ({
       ...buildArt(n.art.kind, 17 + i * 31),
       at: [P[i][0] + n.art.dx, P[i][1] + n.art.dy],
     }));
-    const sky = buildSky();
-    const flour = buildFlourishes();
-
-    // the timeline swoops in big alternating S-curves instead of a tidy line
-    const segs = P.slice(0, -1).map((a, i) => {
-      const b = P[i + 1];
-      const dx = b[0] - a[0], dy = b[1] - a[1];
-      const len = Math.hypot(dx, dy) || 1;
-      const nx = -dy / len, ny = dx / len;
-      const side = i % 2 ? -1 : 1;
-      const bulge = len * 0.4;
-      const c1 = [a[0] + dx * 0.15 + nx * bulge * side, a[1] + dy * 0.15 + ny * bulge * side];
-      const c2 = [a[0] + dx * 0.85 - nx * bulge * side * 0.9, a[1] + dy * 0.85 - ny * bulge * side * 0.9];
-      return `M${f(a[0])} ${f(a[1])}C${f(c1[0])} ${f(c1[1])} ${f(c2[0])} ${f(c2[1])} ${f(b[0])} ${f(b[1])}`;
-    });
-    return { P, art, sky, segs, flour };
+    return { track, P, art, sky: buildSky(), props: buildProps(track.car) };
   }, []);
 
   const node = atlas[active];
 
-  const go = (d) => setActive((a) => (a + d + atlas.length) % atlas.length);
+  const go = (d) => {
+    setTouched(true);
+    setActive((a) => (a + d + atlas.length) % atlas.length);
+  };
   const onKey = (e) => {
     if (e.key === 'ArrowRight') { e.preventDefault(); go(1); }
     if (e.key === 'ArrowLeft') { e.preventDefault(); go(-1); }
@@ -52,11 +42,14 @@ export default function Atlas() {
   return (
     <section id="experiences" className="atlas" data-palette="2" style={{ '--nc': node.color }}>
       <div className="atlas-head section">
-        <Reveal><p className="label">02 — experiences</p></Reveal>
+        <Reveal><p className="label">03 — experiences</p></Reveal>
         <Reveal as="h2" className="h2">
-          where i’ve worked<span className="dim">, in order</span>
+          the world tour
         </Reveal>
-        <Reveal><p className="body atlas-help">pick a star. it runs left to right in time, oldest first, with start and end dates along the bottom.</p></Reveal>
+        <Reveal className="atlas-hint">
+          <span className="hint-pill"><span className="hint-dot" />{touched ? 'use ← → or click another star' : 'click a star to open it'}</span>
+          <span className="label">set on the suzuka circuit, japan</span>
+        </Reveal>
       </div>
 
       <div className="atlas-scroll">
@@ -88,17 +81,22 @@ export default function Atlas() {
               {geo.sky.stars.map(([x, y, r], i) => <circle key={i} cx={x} cy={y} r={r} className="sky-star" />)}
             </g>
 
-            {/* free-form terrain in the gaps */}
-            <g className="flourish">
-              {geo.flour.paths.map((d, i) => <path key={i} d={d} className="flour-line" />)}
-              {geo.flour.orbits.map(([cx, cy, rx, ry, rot], i) => (
-                <g key={i} transform={`rotate(${rot} ${cx} ${cy})`}>
-                  <ellipse cx={cx} cy={cy} rx={rx} ry={ry} className="flour-dotted" />
-                  <line x1={cx - rx * 0.5} x2={cx + rx * 0.5} y1={cy} y2={cy} className="flour-line" />
-                  <circle cx={cx + rx * 0.7} cy={cy - ry * 0.7} r="3" className="art-dot" />
-                </g>
-              ))}
+            {/* the circuit */}
+            <g className="track">
+              <path d={geo.track.full} className="track-road" />
             </g>
+
+            {/* the F1 car, nearly at the last stop, nose pointing the way the lap runs */}
+            {geo.props.map((p) => (
+              <g key={p.kind} transform={`translate(${f(p.x)} ${f(p.y)})`} className="prop">
+                <g transform={`rotate(${f(p.angle)}) scale(${-p.s} ${p.s})`}>
+                  {p.paths.map((d, k) => <path key={k} d={d} className="flour-line prop-line" />)}
+                </g>
+                <g transform={`scale(${p.s})`}>
+                  {p.texts.map(([x, y, t], k) => <text key={k} x={x} y={y - 8} className="art-text">{t}</text>)}
+                </g>
+              </g>
+            ))}
 
             {/* each experience's landmass */}
             {geo.art.map((a, i) => (
@@ -113,22 +111,31 @@ export default function Atlas() {
               </g>
             ))}
 
-            {/* chronology */}
-            {geo.segs.map((d, i) => (
+            {/* the racing line: one stretch per step in time (lit once you've reached it), then the way home */}
+            <path d={geo.track.rest} className="melody back" />
+            {geo.track.legs.map((d, i) => (
               <motion.g
                 key={i}
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 1.2, delay: 0.4 + i * 0.4 }}
+                transition={{ duration: 1.2, delay: 0.3 + i * 0.35 }}
               >
                 <path d={d} className={`melody${i < active ? ' played' : ''}`} />
               </motion.g>
             ))}
+            {geo.track.chevrons.map((c, i) => (
+              <path
+                key={i}
+                d="M6 0L-4 -5L-4 5Z"
+                transform={`translate(${c.x} ${c.y}) rotate(${c.angle})`}
+                className={`chevron${c.leg < active ? ' played' : ''}`}
+              />
+            ))}
 
             {/* time axis */}
             <g className="axis">
-              <line x1="80" x2={W - 80} y1={H - 62} y2={H - 62} className="axis-line" />
+              <line x1="120" x2={W - 120} y1={H - 62} y2={H - 62} className="axis-line" />
               {atlas.map((n, i) => (
                 <g key={n.id} className={i === active ? 'on' : ''}>
                   <line x1={geo.P[i][0]} x2={geo.P[i][0]} y1={H - 62} y2={H - 52} className="axis-tick" />
@@ -148,6 +155,8 @@ export default function Atlas() {
                   <ellipse rx={on ? 46 : 30} ry="1.6" fill={n.color} className="flare" />
                   <ellipse rx="1.6" ry={on ? 34 : 22} fill={n.color} className="flare" />
                   <circle r="4.5" fill="#fff" />
+                  <circle cx="-17" cy="-17" r="9.5" className="badge" style={{ stroke: n.color }} />
+                  <text x="-17" y="-13" className="badge-num" style={{ fill: n.color }}>{i + 1}</text>
                 </g>
               );
             })}
@@ -156,16 +165,15 @@ export default function Atlas() {
           {atlas.map((n, i) => (
             <button
               key={n.id}
-              className={`node${i === active ? ' active' : ''}`}
-              style={{ left: `${n.pos[0]}%`, top: `${n.pos[1]}%`, '--c': n.color }}
-              onClick={() => setActive(i)}
+              className={`node${i === active ? ' active' : ''}${n.labelLeft ? ' flip' : ''}`}
+              style={{ left: `${(geo.P[i][0] / W) * 100}%`, top: `${(geo.P[i][1] / H) * 100}%`, '--c': n.color }}
+              onClick={() => { setTouched(true); setActive(i); }}
               aria-pressed={i === active}
               aria-label={`${n.title}, ${n.when}`}
             >
               <span className="node-label">
                 {n.title.toLowerCase()}
-                <span className="node-year">{String(i + 1).padStart(2, '0')} · {n.start} → {n.end}</span>
-                {n.highlight && <span className="node-badge">✎ {n.highlight.short}</span>}
+                <span className="node-year">{n.start} → {n.end}</span>
               </span>
             </button>
           ))}

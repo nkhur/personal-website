@@ -6,10 +6,10 @@ import Nav from './components/Nav';
 import Playhead from './components/Playhead';
 import Hero from './components/Hero';
 import LinerNotes from './components/LinerNotes';
+import Skills from './components/Skills';
 import Atlas from './components/Atlas';
 import Tracklist from './components/Tracklist';
 import Studio from './components/Studio';
-import Outro from './components/Outro';
 import HandControl from './components/HandControl';
 
 export default function Home() {
@@ -30,11 +30,12 @@ export default function Home() {
       <main>
         <Hero />
         <LinerNotes />
+        <Skills />
         <Atlas />
         <Tracklist />
         <Studio />
-        <Outro />
       </main>
+      <footer className="site-foot label">© {new Date().getFullYear()} navya khurana</footer>
       <HandControl control={control} />
     </>
   );

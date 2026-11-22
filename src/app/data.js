@@ -15,8 +15,6 @@ export const profile = {
     ['studying', 'computer science + math @ umd · dec 2026'],
     ['currently', 'research software engineer @ uc davis health'],
     ['this summer', 'software engineer intern @ visa'],
-    ['on repeat', 'whatever a friend just sent me'],
-    ['also', 'mario kart (badly)'],
   ],
   email: 'nkhurana@umd.edu',
   github: 'https://github.com/nkhur',
@@ -24,8 +22,8 @@ export const profile = {
   resume: '/resume.pdf',
 };
 
-// Atlas nodes, in chronological order (oldest first). `pos` = [x%, y%] on the map;
-// keep x increasing so the map reads left to right in time.
+// Atlas nodes, in chronological order (oldest first). Each sits on the race circuit (see
+// buildTrack in atlasArt.js); `art.dx/dy` place its drawing relative to its stop.
 export const atlas = [
   {
     id: 'shah',
@@ -34,9 +32,8 @@ export const atlas = [
     when: 'Feb — Sep 2024',
     start: 'Feb 2024',
     end: 'Sep 2024',
-    pos: [10, 80],
     color: '#4fe3ff',
-    art: { kind: 'neural', dx: 150, dy: -150 },
+    art: { kind: 'neural', dx: 192, dy: -20 },
     blurb: 'Built the software behind a closed-loop brain-stimulation rig for Parkinson’s research: live recording, stimulation and visualization across 32 channels.',
     points: [
       'Python control system covering recording, stimulation and visualization.',
@@ -51,9 +48,8 @@ export const atlas = [
     when: 'Jul — Sep 2024',
     start: 'Jul 2024',
     end: 'Sep 2024',
-    pos: [26, 22],
     color: '#ffa24a',
-    art: { kind: 'seo', dx: -40, dy: 140 },
+    art: { kind: 'seo', dx: 192, dy: -20 },
     blurb: 'Shipped two ML features at an SEO startup: a chatbot that lifted client CTR and time on page 15–20%, and a scorer that cut manual SEO review by 20+ hours.',
     points: [
       'Performance Analytics Chatbot, live across 12+ clients: analyzed 18 months of MongoDB campaign data, found action–impact relationships with linear regression, and delivered LLM-augmented recommendations to repeat what worked using each client’s current metrics.',
@@ -68,9 +64,8 @@ export const atlas = [
     when: 'Mar — Jun 2025',
     start: 'Mar 2025',
     end: 'Jun 2025',
-    pos: [42, 68],
     color: '#ff5fc8',
-    art: { kind: 'news', dx: 30, dy: -160 },
+    art: { kind: 'news', dx: 192, dy: -20 },
     blurb: 'Built the pipelines and PyTorch classifiers that measured how well 1000+ YouTube videos matched viewer reactions across 1M+ comments.',
     points: [
       'The lab’s mission: reimagine how young audiences engage with political and news content through data, AI and interaction design.',
@@ -85,9 +80,9 @@ export const atlas = [
     when: 'Aug 2025 — now',
     start: 'Aug 2025',
     end: 'present',
-    pos: [58, 18],
     color: '#ff6a5a',
-    art: { kind: 'health', dx: -20, dy: 150 },
+    art: { kind: 'health', dx: -192, dy: -20 },
+    labelLeft: true,
     blurb: 'Built an Epic-integrated tool that shows clinicians a patient’s personalized hypertension benefit–risk tradeoff; confirmed for pilot evaluation at Kaiser Permanente, UCSF and UCSD.',
     highlight: {
       short: 'first-author paper',
@@ -108,9 +103,8 @@ export const atlas = [
     when: 'Sep 2025 — May 2026',
     start: 'Sep 2025',
     end: 'May 2026',
-    pos: [74, 78],
     color: '#8f8bff',
-    art: { kind: 'impact', dx: -20, dy: -150 },
+    art: { kind: 'impact', dx: 192, dy: -20 },
     blurb: 'Built the rematching pipeline for an ML system that pairs senior citizens with volunteers to reduce social isolation.',
     points: [
       'Pulled low-score pairs from Firebase, then generated embeddings and upserted them into Pinecone.',
@@ -125,9 +119,9 @@ export const atlas = [
     when: 'Jun — Aug 2026',
     start: 'Jun 2026',
     end: 'Aug 2026',
-    pos: [90, 24],
     color: '#ffd84a',
-    art: { kind: 'payments', dx: -40, dy: 150 },
+    art: { kind: 'payments', dx: -192, dy: -20 },
+    labelLeft: true,
     blurb: 'Built a Spring Boot + React platform that automates payment-processing workflows for 12 gateways, cutting a 20-minute, 8+ step task to a minute or less for ~500+ internal users.',
     points: [
       'Full-stack platform automating SSH-driven workflows for a new settlement system and 12 payment gateways; operators went from 8+ manual steps to 3.',

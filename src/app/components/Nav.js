@@ -6,7 +6,7 @@
 
 import { useEffect, useState } from 'react';
 
-const LINKS = ['about', 'experiences', 'projects', 'studio', 'contact'];
+const LINKS = ['about', 'skills', 'experiences', 'projects', 'studio'];
 const IDS = ['top', ...LINKS];
 const pathFor = (id) => (id === 'top' ? '/' : `/${id}`);
 const idFromPath = () => {
