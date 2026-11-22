@@ -5,6 +5,7 @@
 // and opening one of those paths directly scrolls to that section.
 
 import { useEffect, useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 const LINKS = ['about', 'skills', 'experiences', 'projects', 'in-progress'];
 const IDS = ['top', ...LINKS];
@@ -73,6 +74,7 @@ export default function Nav() {
   return (
     <header className="nav-wrap">
       <a href="/" className="nav-logo" onClick={(e) => go(e, 'top')} aria-label="back to the start">nk.</a>
+      <div className="nav-right">
       <nav className="nav" aria-label="sections">
         {LINKS.map((id) => (
           <a key={id} href={pathFor(id)} onClick={(e) => go(e, id)} className={active === id ? 'active' : ''}>
@@ -80,6 +82,8 @@ export default function Nav() {
           </a>
         ))}
       </nav>
+      <ThemeToggle />
+      </div>
     </header>
   );
 }

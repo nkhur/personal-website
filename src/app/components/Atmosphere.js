@@ -41,6 +41,15 @@ const SECTIONS = [
   { bg: [12, 11, 6], a: [190, 170, 80], b: [90, 170, 120] }, // studio
   { bg: [7, 7, 14], a: [96, 80, 200], b: [80, 150, 200] }, // contact
 ];
+// the same six moods, on a light page: pale tinted grounds, richer glows
+const LIGHT_SECTIONS = [
+  { bg: [246, 243, 252], a: [110, 92, 220], b: [220, 100, 180] }, // intro
+  { bg: [252, 246, 240], a: [214, 140, 80], b: [200, 90, 100] }, // about
+  { bg: [240, 248, 248], a: [30, 150, 150], b: [50, 100, 210] }, // experiences
+  { bg: [248, 243, 251], a: [160, 70, 190], b: [100, 80, 210] }, // projects
+  { bg: [251, 249, 238], a: [170, 140, 30], b: [60, 150, 100] }, // in progress
+  { bg: [246, 243, 252], a: [110, 92, 220], b: [70, 140, 200] }, // spare
+];
 const COL_OFFSETS = [0, 1, -1, 2, 0, 1, -1];
 
 // the staff's own motion is fixed
@@ -91,7 +100,9 @@ export default function Atmosphere({ control }) {
     }));
 
     // ---- colour + section tracking
-    let cur = { bg: [...SECTIONS[0].bg], a: [...SECTIONS[0].a], b: [...SECTIONS[0].b] };
+    const themeIsLight = () => document.documentElement.dataset.theme === 'light';
+    const first = (themeIsLight() ? LIGHT_SECTIONS : SECTIONS)[0];
+    let cur = { bg: [...first.bg], a: [...first.a], b: [...first.b] };
     let secIdx = 0;
     let sections = [];
     const pick = () => {
@@ -133,13 +144,15 @@ export default function Atmosphere({ control }) {
       const dt = Math.min(0.05, (now - last) / 1000);
       last = now;
       T += dt * (reduced ? 0.2 : 1);
-      const sec = SECTIONS[secIdx];
+      const isLight = themeIsLight();
+      const sec = (isLight ? LIGHT_SECTIONS : SECTIONS)[secIdx];
 
       // colour eases toward the current section (the one thing scroll changes about the look)
       cur.bg = mix(cur.bg, sec.bg, 0.04);
       cur.a = mix(cur.a, sec.a, 0.04);
       cur.b = mix(cur.b, sec.b, 0.04);
-      const accent = mix(cur.a, [255, 255, 255], 0.45);
+      // the shapes are pale on the dark theme and dark on the light one
+      const accent = isLight ? mix(cur.a, [14, 10, 30], 0.3) : mix(cur.a, [255, 255, 255], 0.45);
       const root = document.documentElement.style;
       root.setProperty('--bg', rgb(cur.bg));
       root.setProperty('--accent', rgb(accent));

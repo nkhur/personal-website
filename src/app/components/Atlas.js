@@ -163,7 +163,7 @@ export default function Atlas() {
                   <circle r={on ? 46 : 32} fill={`url(#glow-${n.id})`} className="star-glow" />
                   <ellipse rx={on ? 46 : 30} ry="1.6" fill={n.color} className="flare" />
                   <ellipse rx="1.6" ry={on ? 34 : 22} fill={n.color} className="flare" />
-                  <circle r="4.5" fill="#fff" />
+                  <circle r="4.5" style={{ fill: 'var(--ink)' }} />
                   <circle cx="-17" cy="-17" r="9.5" className="badge" style={{ stroke: n.color }} />
                   <text x="-17" y="-13" className="badge-num" style={{ fill: n.color }}>{i + 1}</text>
                 </g>
