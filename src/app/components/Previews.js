@@ -237,7 +237,137 @@ function MapDots() {
   );
 }
 
-const KINDS = { codemap: CodeMap, agenda: Agenda, scatter: Scatter, tree: Tree, pipes: Pipes, maze: Maze, map: MapDots };
+// TrueView: a video interview, its live transcript, and a bias-score dashboard
+function Interview() {
+  const R = rng(5);
+  return (
+    <>
+      <D d="M30 40h140v100h-140z" />
+      <path pathLength="1" className="d" style={{ animationDelay: '0.3s' }} d="M100 74a16 16 0 1 0 0.1 0" />
+      <D d="M62 132q38 -44 76 0" delay={0.4} />
+      <D d={`M30 166${Array.from({ length: 28 }, (_, i) => `L${30 + (i + 1) * 5} ${166 + (R() - 0.5) * 22}`).join('')}`} delay={0.6} />
+      <T x="100" y="196">audio</T>
+      {[52, 68, 84, 100, 116].map((y, i) => <D key={i} d={`M214 ${y}h${130 - (i % 3) * 22}`} delay={0.7 + i * 0.1} className={i === 2 ? 'd thick' : 'd'} />)}
+      <D d="M352 80l8 4l-8 4" delay={1.3} className="d thick" />
+      <T x="290" y="140">transcript</T>
+      {[0, 1, 2, 3, 4].map((i) => {
+        const h = [34, 52, 78, 44, 60][i];
+        return <D key={i} d={`M${220 + i * 28} 262v${-h}h18v${h}`} delay={1.2 + i * 0.1} className={i === 2 ? 'd thick' : 'd'} />;
+      })}
+      <T x="290" y="286">bias score</T>
+    </>
+  );
+}
+
+// CrossSense: three senses feed one attention-fusion model
+function Fusion() {
+  const circle = (cx, cy, r) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
+  return (
+    <>
+      <D d="M26 70q24 -22 48 0q-24 22 -48 0" />
+      <Dot cx="50" cy="70" r="6" delay={0.3} />
+      <T x="50" y="108">vision</T>
+      {[34, 42, 50, 58, 66].map((x, i) => <D key={x} d={`M${x} ${158 - (i % 3 + 1) * 7}v${(i % 3 + 1) * 14}`} delay={0.3 + i * 0.05} />)}
+      <T x="50" y="198">audio</T>
+      <D d={circle(50, 238, 9)} delay={0.4} />
+      <D d="M32 238a18 18 0 0 1 36 0M24 238a26 26 0 0 1 52 0" delay={0.5} className="d faint-line" />
+      <T x="50" y="282">touch</T>
+      {[[78, 70], [78, 150], [78, 238]].map(([x, y], i) => <D key={i} d={`M${x} ${y}L186 ${150 + (y - 150) * 0.35}`} delay={0.8 + i * 0.1} className="d faint-line" />)}
+      <path pathLength="1" className="d thick" style={{ animationDelay: '1.1s' }} d={circle(220, 150, 38)} />
+      {[[205, 135], [238, 140], [215, 168], [236, 166]].map(([x, y], i) => <Dot key={i} cx={x} cy={y} r="3.2" delay={1.3 + i * 0.05} />)}
+      <D d="M205 135L238 140M205 135L215 168M238 140L236 166M215 168L236 166M205 135L236 166" delay={1.5} className="d faint-line" />
+      <T x="220" y="212">attention fusion</T>
+      <D d="M262 150h56" delay={1.7} />
+      <D d="M312 144l6 6l-6 6" delay={1.8} />
+      <D d="M326 128h44v44h-44z" delay={1.9} />
+      <T x="348" y="192">prediction</T>
+    </>
+  );
+}
+
+// Garbage Collectors in Rust: roots point at live heap cells, the rest is swept
+function Heap() {
+  const live = new Set([2, 5, 6, 9, 11, 14, 17]);
+  const cells = [];
+  for (let r = 0; r < 4; r++) for (let c = 0; c < 5; c++) cells.push([110 + c * 36, 56 + r * 36, r * 5 + c]);
+  return (
+    <>
+      {[0, 1, 2].map((i) => <D key={i} d={`M28 ${70 + i * 44}h26v26h-26z`} delay={i * 0.1} />)}
+      <T x="41" y="224">stack roots</T>
+      {[[2, 0], [6, 1], [14, 2]].map(([cell, root], i) => {
+        const [x, y] = cells[cell];
+        return <D key={i} d={`M54 ${83 + root * 44}L${x + 18} ${y + 18}`} delay={0.5 + i * 0.1} className="d faint-line" />;
+      })}
+      {cells.map(([x, y, id]) => (
+        <path key={id} pathLength="1" className={live.has(id) ? 'd' : 'd dashed'} style={{ animationDelay: `${0.3 + id * 0.03}s`, strokeOpacity: live.has(id) ? 1 : 0.45 }} d={`M${x} ${y}h30v30h-30z`} />
+      ))}
+      {[...live].map((id) => <Dot key={id} cx={cells[id][0] + 15} cy={cells[id][1] + 15} r="3.4" delay={1.0} />)}
+      <T x="200" y="224">mark + sweep</T>
+      <D d="M312 70h60v60h-60z" delay={1.2} />
+      {[0, 1, 2, 3].map((i) => <D key={i} d={`M${312 + (i % 2) * 30} ${70 + Math.floor(i / 2) * 30}h30v30h-30z`} delay={1.3 + i * 0.05} className="d faint-line" />)}
+      <D d="M300 100h-8M296 96l-4 4l4 4" delay={1.2} />
+      <T x="342" y="152">copy</T>
+    </>
+  );
+}
+
+// Aestoria: photos -> style embedding -> a flowing sequence
+function Curate() {
+  const R = rng(13);
+  const circle = (cx, cy, r) => `M${cx - r} ${cy}a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 ${-2 * r} 0`;
+  const tiles = Array.from({ length: 9 }, (_, i) => [30 + (i % 3) * 40, 50 + Math.floor(i / 3) * 40]);
+  return (
+    <>
+      {tiles.map(([x, y], i) => (
+        <g key={i}>
+          <D d={`M${x} ${y}h32v32h-32z`} delay={i * 0.05} />
+          <D d={`M${x + 4} ${y + 26}l8 -10l6 6l6 -12l6 16`} delay={0.2 + i * 0.05} className="d faint-line" />
+        </g>
+      ))}
+      <T x="70" y="190">photos</T>
+      <D d="M160 100h34" delay={0.8} />
+      <D d="M188 94l6 6l-6 6" delay={0.9} />
+      <path pathLength="1" className="d dashed" style={{ animationDelay: '1s' }} d={circle(280, 100, 68)} />
+      {Array.from({ length: 16 }, (_, i) => {
+        const a = R() * 6.283, r = 10 + R() * 52;
+        return <Dot key={i} cx={280 + Math.cos(a) * r} cy={100 + Math.sin(a) * r * 0.9} r="3" delay={1.1 + i * 0.03} />;
+      })}
+      <path pathLength="1" className="d thick" style={{ animationDelay: '1.6s' }} d={circle(280, 100, 8)} />
+      <T x="280" y="190">your style</T>
+      {[0, 1, 2, 3].map((i) => (
+        <g key={i}>
+          <D d={`M${60 + i * 78} 232h40v34h-40z`} delay={1.8 + i * 0.1} />
+          {i < 3 && <D d={`M${100 + i * 78} 249h36m-5 -5l5 5l-5 5`} delay={2 + i * 0.1} className="d faint-line" />}
+        </g>
+      ))}
+      <T x="200" y="290">flow-aware sequence</T>
+    </>
+  );
+}
+
+// Time series forecasting: attendance history, a widening forecast, weather underneath
+function Forecast() {
+  const R = rng(17);
+  const hist = Array.from({ length: 23 }, (_, i) => [40 + i * 10, 110 + Math.sin(i * 0.9) * 28 + (R() - 0.5) * 14]);
+  return (
+    <>
+      <D d="M36 40v170h336" />
+      <D d={`M${hist.map(([x, y]) => `${x} ${y.toFixed(1)}`).join('L')}`} delay={0.3} className="d thick" />
+      <D d="M270 112L370 100M270 112L370 134" delay={1.3} className="d dashed" />
+      <D d="M270 112Q320 96 370 118" delay={1.4} />
+      <D d="M270 36v174" delay={1.2} className="d dashed" />
+      <T x="150" y="32">attendance</T>
+      <T x="322" y="32">forecast</T>
+      {Array.from({ length: 22 }, (_, i) => {
+        const h = 6 + Math.abs(Math.sin(i * 1.3) * 30);
+        return <D key={i} d={`M${46 + i * 14} 262v${-h}`} delay={0.6 + i * 0.03} className="d faint-line" />;
+      })}
+      <T x="190" y="286">weather</T>
+    </>
+  );
+}
+
+const KINDS = { interview: Interview, fusion: Fusion, heap: Heap, curate: Curate, forecast: Forecast,  codemap: CodeMap, agenda: Agenda, scatter: Scatter, tree: Tree, pipes: Pipes, maze: Maze, map: MapDots };
 
 export default function Preview({ kind }) {
   const Comp = KINDS[kind] || CodeMap;

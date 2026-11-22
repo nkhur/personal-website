@@ -35,9 +35,13 @@ export const atlas = [
     blurb: 'Built the software behind a closed-loop brain-stimulation rig for Parkinson’s research: live recording, stimulation and visualization across 32 channels.',
     points: [
       'Python control system covering recording, stimulation and visualization.',
-      'SPI-driven FPGA pattern loading, enabling further research in the lab.',
+      'Worked with Professor Sahil Shah (ECE) at UMD toward future clinical experiments for the lab.',
+      'Custom Python GUI that decodes and displays neural signals to and from the Intan RHS 2000 board, streamed as binary into OpenEphys for real-time visualization, with user-defined alerts for matching patterns.',
+      'Live stimulation: triggers outputs based on incoming signal characteristics, for immediate response in closed-loop experiments.',
+      'SPI command interpreters that generate .coe files for loading experimental stimulation patterns onto the FPGA, enabling further research in the lab.',
+      'Supported researchers with custom firmware patches and documentation for smooth lab adoption.',
     ],
-    stack: ['Python', 'SPI', 'FPGA'],
+    stack: ['Python', 'SPI', 'FPGA', 'OpenEphys'],
   },
   {
     id: 'passionfruit',
@@ -50,10 +54,13 @@ export const atlas = [
     art: { kind: 'seo', dx: 192, dy: -20 },
     blurb: 'Shipped two ML features at an SEO startup: a chatbot that lifted client CTR and time on page 15–20%, and a scorer that cut manual SEO review by 20+ hours.',
     points: [
-      'Performance Analytics Chatbot, live across 12+ clients: analyzed 18 months of MongoDB campaign data, found action–impact relationships with linear regression, and delivered LLM-augmented recommendations to repeat what worked using each client’s current metrics.',
-      'Topical Authority Scorer: quantitative SEO relevance scores for client content, using YAKE + BERT keyword extraction, cosine similarity of text embeddings, and LLM-based evaluation.',
+      'Owned and built client-facing full-stack ML and NLP tools in Python, Node.js and Next.js. Learned on the job and shipped in a fast-paced startup.',
+      'Chatbot: linear regression over 18 months of MongoDB campaign data found which actions moved results, and an LLM recommended how to repeat them with each client’s current metrics.',
+      'Scorer: rates how on-topic a client’s content is, using YAKE + BERT keywords, embedding cosine similarity and LLM evaluation.',
+      'Content ideas generator: scraped Google’s “People Also Ask” questions and the structure of top-ranking blogs (word count, hyperlink density, image use) to auto-generate LLM prompts for content ideation.',
+      'Content editor: live keyword scoring, autosave and GPT rewrite suggestions to improve on-page SEO.',
     ],
-    stack: ['MongoDB', 'Python', 'BERT', 'YAKE', 'LLMs'],
+    stack: ['Python', 'Node.js', 'Next.js', 'MongoDB', 'BERT', 'YAKE', 'OpenAI'],
   },
   {
     id: 'del',
@@ -66,10 +73,12 @@ export const atlas = [
     art: { kind: 'news', dx: 192, dy: -20 },
     blurb: 'Built the pipelines and PyTorch classifiers that measured how well 1000+ YouTube videos matched viewer reactions across 1M+ comments.',
     points: [
-      'The lab’s mission: reimagine how young audiences engage with political and news content through data, AI and interaction design.',
       'Built data ingestion and transformation pipelines to quantify viewer–content alignment and surface engagement patterns.',
+      'Analyzed millions of comments with PyTorch classifiers to build a “viewer–content alignment” metric for videos, pulling structured metadata and comments from the YouTube Data API and adding HuggingFace emotion and semantic models for comments, titles and transcripts.',
+      'New View News: the lab’s scannable AI news platform for instant high-level insights. Built core features, added PostHog (cursor heatmaps, click frequency, session replays) for event-level UX research, and integrated the open-source news-story-viz tool for narrative visual summaries.',
     ],
-    stack: ['Python', 'PyTorch', 'YouTube data'],
+    link: { label: 'new view news', href: 'https://smart-story-agent.vercel.app/' },
+    stack: ['Python', 'PyTorch', 'HuggingFace', 'Next.js', 'PostHog'],
   },
   {
     id: 'ucdavis',
@@ -88,11 +97,12 @@ export const atlas = [
       text: 'In progress: I’m leading the manuscript on the Bayesian benefit–risk model behind the tool.',
     },
     points: [
-      'React.js clinical decision-support tool integrated with the Epic EHR, modeling benefit–risk tradeoffs with Bayesian analysis.',
+      'React.js clinical decision-support tool integrated with the Epic EHR (SMART on FHIR), modeling benefit–risk tradeoffs with Bayesian analysis.',
+      'Interactive charts (Chart.js) that help clinicians and patients visualize the tradeoffs and make decisions.',
       'Formalized the Bayesian risk model in R, trained and tested on SPRINT trial data (9,316 enrolled).',
       'Working directly with Dr. Simon Benjamin Ascher.',
     ],
-    stack: ['React', 'Epic EHR', 'R', 'Bayesian analysis'],
+    stack: ['React', 'TypeScript', 'Next.js', 'Chart.js', 'Epic EHR', 'SMART on FHIR', 'R', 'Bayesian analysis'],
   },
   {
     id: 'h4i',
@@ -107,6 +117,7 @@ export const atlas = [
     points: [
       'Pulled low-score pairs from Firebase, then generated embeddings and upserted them into Pinecone.',
       'Integrated a new Express REST API layer to support frontend workflows.',
+      'Collaborated with a cross-functional team and Microsoft mentors in an agile SDLC environment.',
     ],
     link: { label: 'github', href: 'https://github.com/Hack4Impact-UMD/for-all-ages' },
     stack: ['Firebase', 'Express', 'Node.js', 'React', 'Pinecone'],
@@ -138,8 +149,8 @@ export const projects = [
     year: 'Fall 2025',
     kind: 'codemap',
     blurb:
-      'Co-built (team of 3) an LLM coding agent that reasons over a rendered visual codemap of a repo (Tree-sitter graph, Leiden clusters) plus cached memory, via MCP tools. On 7 Terminal-Bench 2.0 tasks against text-only and LocAgent baselines: 50% fewer backtracks (1.57 vs 3.14), 72% fewer hallucinations, 6% lower cost.',
-    stack: ['Python', 'Tree-sitter', 'MCP'],
+      'Co-built (team of 3) a multimodal LLM coding agent that reasons over a rendered visual codemap of a repo (Tree-sitter graph, Leiden clusters) plus cached memory, via MCP tools. On 7 Terminal-Bench 2.0 tasks against text-only and LocAgent baselines: 50% fewer backtracks (1.57 vs 3.14), 72% fewer hallucinations, 33% fewer hypotheses, 6% lower cost. Co-authored the research paper.',
+    stack: ['Python', 'Tree-sitter', 'MCP', 'Docker'],
   },
   {
     title: 'Remi',
@@ -147,18 +158,63 @@ export const projects = [
     year: 'Fall 2025',
     kind: 'agenda',
     blurb:
-      'An intelligent meeting and voice assistant that orchestrates meeting analysis, email drafting and calendar events across Google Workspace to give a personalized daily overview. An automated agenda-tracking and suggestion pipeline sits on a Neo4j knowledge graph of task dependencies and context.',
+      'An intelligent meeting and voice assistant that orchestrates meeting analysis, email drafting and calendar events across Google Workspace to give a personalized daily overview. An automated agenda-tracking and suggestion pipeline sits on a Neo4j knowledge graph of task dependencies and context. Built with AI-assisted rapid prototyping (Copilot, Claude).',
     stack: ['Electron.js', 'Python', 'Supabase', 'Neo4j', 'Render', 'ElevenLabs', 'Gemini'],
     link: { label: 'devpost', href: 'https://devpost.com/software/remi-x2vb91' },
   },
   {
+    title: 'TrueView',
+    sub: 'bias detection interview platform',
+    year: 'Nov 2025',
+    kind: 'interview',
+    blurb:
+      'Built at Gemini Hack Night: a production-ready MVP in under 8 hours, with real-time transcription, performance and bias scoring, an HR analytics dashboard and a meeting platform. Whisper and Gemini analyze video, audio and transcript together, and AI-assisted rapid prototyping kept iteration fast.',
+    stack: ['Python', 'Next.js', 'Flask', 'Render', 'Whisper', 'Gemini'],
+  },
+  {
+    title: 'CrossSense',
+    sub: 'multimodal vision transformer: vision, sound + touch',
+    year: 'Nov 2025',
+    kind: 'fusion',
+    blurb:
+      'Designed and trained a multimodal Vision Transformer from scratch on the ObjectFolder dataset (vision + audio + tactile), covering data ingestion, early/late fusion and serving: 83% accuracy, +18% over baselines. Attention-based fusion reached 94%, +12% over late fusion, with interpretable cross-modal attention maps.',
+    stack: ['PyTorch', 'Python'],
+  },
+  {
+    title: 'Aestoria',
+    sub: 'personalized ml image curation',
+    year: 'Aug 2025 — present',
+    kind: 'curate',
+    blurb:
+      'Building a CLIP-based pipeline that embeds a user’s style from Instagram and Pinterest by vibe and quality, then sequences photos with learned aesthetic transitions and graph search.',
+    stack: ['PyTorch', 'Next.js', 'MongoDB'],
+  },
+  {
+    title: 'Time Series Forecasting',
+    sub: 'class attendance + weather',
+    year: 'May 2025',
+    kind: 'forecast',
+    blurb:
+      'Applied ARIMA and ARIMAX models to study how weather relates to class attendance, tuning parameters with ACF/PACF and Dickey-Fuller stationarity tests and validating the findings with Pearson, Spearman and t-tests.',
+    stack: ['Python'],
+  },
+  {
     title: 'Professor Rating Predictor',
     sub: 'machine learning · planetterp',
-    year: '2025',
+    year: 'Apr 2025',
     kind: 'scatter',
     blurb:
-      'Random forest, KNN and ridge regression models that predict a UMD professor’s rating from PlanetTerp data. 10-fold cross-validation, up to 75.8% R² on held-out data.',
+      'Random forest, KNN and ridge regression models that predict a UMD professor’s rating from PlanetTerp data (think ratemyprof for UMD). 10-fold cross-validation, up to 75.8% R² on held-out data.',
     stack: ['Python', 'pandas', 'scikit-learn'],
+  },
+  {
+    title: 'Garbage Collectors in Rust',
+    sub: 'systems',
+    year: 'Fall 2024',
+    kind: 'heap',
+    blurb:
+      'Implemented reference-counting, mark-and-sweep and stop-and-copy garbage collectors in safe Rust, managing heap allocation, stack roots, pointer updating, cycles and fragmentation on a Vec-based memory simulation.',
+    stack: ['Rust', 'Systems programming', 'Memory management'],
   },
   {
     title: 'MicroCaml',
@@ -172,15 +228,15 @@ export const projects = [
   {
     title: 'Shell',
     sub: 'systems',
-    year: '2024',
+    year: 'Mar 2024',
     kind: 'pipes',
-    blurb: 'A Unix-style shell with &&, pipes, redirection and subshells, built on a command tree and child processes.',
+    blurb: 'A Unix-style shell in C with command parsing, redirection, pipes and subshells, built on a command tree and child processes.',
     stack: ['C'],
   },
   {
     title: 'Maze Solver',
     sub: 'graphs',
-    year: '2023',
+    year: 'Nov 2023',
     kind: 'maze',
     blurb:
       'Models a maze as a weighted graph; finds solutions with BFS and DFS and the best path with Dijkstra’s. Comes with a GUI.',
