@@ -180,6 +180,11 @@ h1, h2, h3, p { margin: 0; }
 .atlas-name { font-family: var(--display); font-weight: 400; font-size: clamp(3rem, 10vw, 8.5rem); line-height: 0.95; letter-spacing: -0.03em; min-height: 1em; }
 .atlas-detail { display: grid; grid-template-columns: 1.1fr 1.3fr 1fr; gap: clamp(1.5rem, 4vw, 3rem); margin-top: 2rem; padding-top: 1.6rem; border-top: 1px solid var(--line); align-items: start; }
 .role { font-family: var(--display); font-size: 1.5rem; margin: 0.3rem 0 0.8rem; }
+.blurb { color: var(--fg); line-height: 1.6; font-size: 1rem; margin: 0 0 1rem; }
+.callout { border: 1px solid color-mix(in srgb, var(--nc) 55%, transparent); border-left-width: 3px; background: color-mix(in srgb, var(--nc) 9%, transparent); border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 1.4rem; }
+.callout .label { color: var(--nc); margin-bottom: 0.5rem; }
+.callout p:last-child { font-family: var(--display); font-size: 1.3rem; line-height: 1.25; color: var(--fg); }
+.node-badge { margin-top: 0.15rem; padding: 0.1rem 0.45rem; border: 1px solid var(--c); border-radius: 999px; color: var(--c); font-size: 0.85em; align-self: flex-start; }
 .atlas-detail .pill { margin-top: 1rem; }
 .points { margin: 0; padding-left: 1.1rem; color: var(--fg-soft); line-height: 1.6; font-size: 0.92rem; }
 .points li { margin-bottom: 0.6rem; }
@@ -248,7 +253,16 @@ h1, h2, h3, p { margin: 0; }
 .hand-card.show { opacity: 1; transform: none; pointer-events: auto; }
 .hand-preview { position: relative; aspect-ratio: 4 / 3; border-radius: 12px; overflow: hidden; background: #000; }
 .hand-preview video, .hand-preview canvas { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
-.hand-hint { font-family: var(--mono); font-size: 0.66rem; line-height: 1.5; color: var(--fg-soft); margin: 0.6rem 0.3rem 0.3rem; min-height: 3em; }
+.hand-state { display: flex; align-items: center; gap: 0.45rem; margin: 0.6rem 0.3rem 0; font-size: 0.64rem; }
+.hand-state-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--fg-faint); transition: background 0.3s, box-shadow 0.3s; }
+.hand-state.ok { color: var(--fg); }
+.hand-state.ok .hand-state-dot { background: #5dffb0; box-shadow: 0 0 8px #5dffb0; }
+.hand-meters { display: grid; grid-template-columns: 2.6rem 1fr; gap: 0.35rem 0.5rem; align-items: center; margin: 0.55rem 0.3rem 0; font-size: 0.6rem; }
+.meter { position: relative; height: 4px; border-radius: 2px; background: var(--line); }
+.meter i { position: absolute; inset: 0; border-radius: 2px; background: var(--accent); transform-origin: left; transform: scaleX(0.5); }
+.meter b { position: absolute; top: 50%; left: 50%; width: 9px; height: 9px; margin: -4.5px 0 0 -4.5px; border-radius: 50%; background: var(--accent); }
+.hand-hint { font-family: var(--mono); font-size: 0.66rem; line-height: 1.5; color: var(--fg-soft); margin: 0.4rem 0.3rem 0.3rem; min-height: 4.5em; animation: hint-in 0.5s ease; }
+@keyframes hint-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* ---------- responsive ---------- */
 @media (max-width: 860px) {

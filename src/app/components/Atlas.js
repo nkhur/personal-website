@@ -165,6 +165,7 @@ export default function Atlas() {
               <span className="node-label">
                 {n.title.toLowerCase()}
                 <span className="node-year">{String(i + 1).padStart(2, '0')} · {n.start} → {n.end}</span>
+                {n.highlight && <span className="node-badge">✎ {n.highlight.short}</span>}
               </span>
             </button>
           ))}
@@ -203,12 +204,18 @@ export default function Atlas() {
             <div>
               <p className="label">{node.when}</p>
               <p className="role">{node.role}</p>
-              <p className="body">{node.blurb}</p>
+              <p className="blurb">{node.blurb}</p>
               {node.link && (
                 <a className="pill" href={node.link.href} target="_blank" rel="noreferrer">{node.link.label} ↗</a>
               )}
             </div>
             <div>
+              {node.highlight && (
+                <div className="callout">
+                  <p className="label">✎ {node.highlight.label}</p>
+                  <p>{node.highlight.text}</p>
+                </div>
+              )}
               {node.points.length > 0 && <ul className="points">{node.points.map((p) => <li key={p}>{p}</li>)}</ul>}
             </div>
             <div>
