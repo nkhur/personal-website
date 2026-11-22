@@ -3,7 +3,7 @@
 
 export const profile = {
   name: 'Navya Khurana',
-  tagline: 'recreational dev.',
+  tagline: '',
   lede: 'i’m a cs and math student at umd, graduating in december 2026.',
   notes: [
     'i enjoy building projects, tinkering with new ideas, and keeping up with developments in cs and ai. i like reading papers and digging through codebases to understand how things work in practice. i’m drawn to technically ambiguous problems and enjoy working with people who are genuinely excited about what they’re building. outside of tech, i enjoy music, the gym, and finding new things to get into.',
